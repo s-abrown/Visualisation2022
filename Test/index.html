@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yankee and the Brave</title>
+
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+    </style>
+
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script>
+        // setting window size constants
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+
+        //linking csv data to the doc
+        d3.csv('try.csv', function (d) {
+            return {
+                politics : +d.instancesOfPolitics,
+                police : +d.instancesOfPolice,
+                speaker : d.speaker,
+            }
+        }).then(data => {
+            // Check
+            console.log("My complete data set: ", data)
+            // espace de dessin
+            let canvas = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)     
+
+            // Ajouter les rectangles
+            canvas.selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('cx',(d,i) => 50 + i * 25)
+                .attr('cy', 50)
+                .attr('r', d => d.politics * 10)
+                .attr('fill', d => {
+                    if(d.speaker == "el-p"){return 'green'}
+                    else if(d.speaker == "km"){return 'red'}
+                })
+                //.attr('opacity', 0.8)
+                    
+
+
+            
+        })
+
+    </script>
+    
+
+</body>
+</html>

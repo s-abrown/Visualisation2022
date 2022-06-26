@@ -12,14 +12,19 @@
             margin: 1px solid;
         }
     </style>
+    <!-- Add 2 buttons -->
+    <button onclick="update(Elp)">El-p</button>
+    <button onclick="update(KM)">Killer Mike</button>
 
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz"></div>
 </head>
 <body>
 
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
     <script>
-        // setting window size constants
+         // setting window size constants
         const width = window.innerWidth;
         const height = window.innerHeight;
 
@@ -27,11 +32,16 @@
         //linking csv data to the doc
         d3.csv('try.csv', function (d) {
             return {
-                politics : +d.instancesOfPolitics,
-                police : +d.instancesOfPolice,
+                sports : +d.instancesOfSports,
+                police : +d.instacesOfAntiPolice,
+                politics : +d.instancesOfAntiCapitalism,
+                boasting : +d.instancesOfBoasting,
+                drugs: +d.instancesOfSubstanceUse,
+                POC : +d.instancesOfPOC,
+
                 speaker : d.speaker,
             }
-        }).then(data => {
+       }).then(data => {
             // Check
             console.log("My complete data set: ", data)
             // espace de dessin
@@ -39,25 +49,94 @@
                 .append('svg')
                 .attr('width', width)
                 .attr('height', height)     
-
+                
             // Ajouter les rectangles
             canvas.selectAll('circle')
             .data(data)
             .enter()
             .append('circle')
-            .attr('cx',(d,i) => 50 + i * 25)
+            .attr('cx',(d,i) => 50 + i * 90)
                 .attr('cy', 50)
-                .attr('r', d => d.politics * 10)
+                .attr('r', d => d.boasting * 10)
                 .attr('fill', d => {
-                    if(d.speaker == "el-p"){return 'green'}
-                    else if(d.speaker == "km"){return 'red'}
+                    if(d.speaker == "El-p"){return 'green'}
+                    else if(d.speaker == "Killer Mike"){return 'red'}
                 })
-                //.attr('opacity', 0.8)
-                    
-
-
-            
+                .attr('opacity', 0.8) 
         })
+
+        // create 2 data_set
+        const Elp = [
+        {group: "Sports", value: 0},
+        {group: "Drugs", value: 1},
+        {group: "Killer Mike", value: 4},
+        {group: "El-p", value: 0},
+        {group: "POC", value: 1},
+        {group: "Boasting", value: 5},
+        {group: "Politics", value: 4},
+        {group: "Police", value: 0}
+        ];
+
+        const KM = [
+        {group: "Sports", value: 1},
+        {group: "Drugs", value: 1},
+        {group: "Killer Mike", value: 2},
+        {group: "El-p", value: 1},
+        {group: "POC", value: 1},
+        {group: "Boasting", value: 4},
+        {group: "Politics", value: 0},
+        {group: "Police", value: 6}
+        ]; 
+
+        // set the dimensions and margins of the graph
+        const margin = {top: 30, right: 30, bottom: 70, left: 60},
+            w = 460 - margin.left - margin.right,
+            h = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        const svg = d3.select("#my_dataviz")
+        .append("svg")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X axis
+        const x = d3.scaleBand()
+        .range([ 0, w ])
+        .domain(Elp.map(d => d.group))
+        .padding(0.2);
+        svg.append("g")
+        .attr("transform", `translate(0,${h})`)
+        .call(d3.axisBottom(x))
+
+        // Add Y axis
+        const y = d3.scaleLinear()
+        .domain([0, 10])
+        .range([ h, 0]);
+        svg.append("g")
+        .attr("class", "myYaxis")
+        .call(d3.axisLeft(y));
+
+        // A function that create / update the plot for a given variable:
+        function update(data) {
+
+        var u = svg.selectAll("rect")
+            .data(data)
+
+        u
+            .join("rect")
+            .transition()
+            .duration(1000)
+            .attr("x", d => x(d.group))
+            .attr("y", d => y(d.value))
+            .attr("width", x.bandwidth())
+            .attr("height", d => h - y(d.value))
+            .attr("fill", "#69b3a2")
+        }
+
+        // Initialize the plot with the first dataset
+        update(Elp)
 
     </script>
     

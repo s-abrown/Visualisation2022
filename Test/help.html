@@ -112,7 +112,7 @@
 
 
 
-            // Add circles
+            // boasting per speaker in each song
             canvas1.selectAll('circle')
             .data(data)
             .enter()
@@ -137,9 +137,25 @@
                         .attr('fill', 'black')
                         .attr('opacity', 1)
             
+                // Canvas N°2
+                let canvas2 = d3.select('body')
+                .append('svg')
+                .attr('width', width - 50)
+                .attr('height', height - 50);
 
-          
-            
+                // Boasting per speaker (total/ across the whole album)
+                let boastingPerSpeaker = d3.rollups(data, v=> d3.sum(v, d => d.boasting), d => d.speaker)
+                console.log(boastingPerSpeaker)
+
+                canvas2.append('g').selectAll('circle')
+                .data(boastingPerSpeaker)
+                .enter()
+                .append('circle')
+                    .attr('cx', )
+                    .attr('cy', )
+                    .attr('r', )
+                    .attr('fill', )
+
 
         })
 

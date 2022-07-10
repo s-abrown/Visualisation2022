@@ -1,0 +1,107 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yankee and the Brave</title>
+
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+    </style>
+</head>
+<body>
+<!-- Load d3.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+<!-- Create a div where the graph will take place -->
+<script>
+    const width = window.innerWidth;
+    const height = window.innerHeight; 
+        d3.csv('RTJ4.csv', function (d) {
+            return {
+                album : +d.album,
+                tr_n : +d.track_number,
+                people : +d.mentionKillerMike + +d.mentionEl_P + +d.mentionFamily,
+                feelings : +d.mentionBoasting + +d.mentionDisillusion,
+                speaker : d.speaker,
+                places : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo, 
+            }
+       }).then(data => {
+            // Check
+            console.log("My complete data set: ", data)
+            // espace de dessin
+            let canvas1 = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', 400)
+
+            canvas1.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                    .attr('cx', d => d.tr_n * 70)
+                    .attr('cy', d => {
+                        if(d.speaker == "el-p"){return 100}
+                        else if(d.speaker == "killerMike"){return 200}
+                        else {return 300}
+                    })
+                    .attr('r', d => d.feelings * 2)
+                    .attr('fill', d => {
+                        if(d.speaker == "el-p"){return 'green'}
+                        else if(d.speaker == "killerMike"){return 'red'}
+                        else {return 'purple'}
+                    })
+                    .attr('opacity', 0.8) 
+
+            let canvas2 = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', 400)
+
+            canvas2.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                    .attr('cx', d => d.tr_n * 70)
+                    .attr('cy', d => {
+                        if(d.speaker == "el-p"){return 100}
+                        else if(d.speaker == "killerMike"){return 200}
+                        else {return 300}
+                    })
+                    .attr('r', d => d.people * 2)
+                    .attr('fill', d => {
+                        if(d.speaker == "el-p"){return 'green'}
+                        else if(d.speaker == "killerMike"){return 'red'}
+                        else {return 'purple'}
+                    })
+                    .attr('opacity', 0.8) 
+
+            let canvas3 = d3.select('body')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', 400)
+
+            canvas3.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                    .attr('cx', d => d.tr_n * 70)
+                    .attr('cy', d => {
+                        if(d.speaker == "el-p"){return 100}
+                        else if(d.speaker == "killerMike"){return 200}
+                        else {return 300}
+                    })
+                    .attr('r', d => d.places * 2)
+                    .attr('fill', d => {
+                        if(d.speaker == "el-p"){return 'green'}
+                        else if(d.speaker == "killerMike"){return 'red'}
+                        else {return 'purple'}
+                    })
+                    .attr('opacity', 0.8)   
+        })
+</script>
+</body>
+</html>

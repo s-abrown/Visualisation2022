@@ -43,33 +43,104 @@
         }).then(data => {
             // Check
             console.log(" Complete data set organised by CATEGORY (≠ subcategory): ", data)
+
+            
+            // max boasting?
+            let maxBoasting = d3.max(data, d => d.boasting);
+            console.log("Max boasting : " , maxBoasting) // 24
+            // min boasting?
+            let minBoasting = d3.min(data, d => d.boasting);
+            console.log("Min boasting : ", minBoasting) // 0
+
             // Drawing space N°1 for boasting (El-p, KM, ZDLR)
             let canvas1 = d3.select('body')
                 .append('svg')
-                .attr('width', width - 20)
-                .attr('height', height - 20)
+                .attr('width', width - 40)
+                .attr('height', height - 40)
+                // .on('click', functionClick);
+
+            // Données continues???
+            const donneesContinues = d3.range(1, 13, 1)
+            console.log("données continues : ", donneesContinues) 
+            
+                
+            
+            // X Scale
+            const xScale = d3.scaleLinear()
+            // domain of data
+                .domain([1, 12])
+            // range
+                .range([0, width - 100])
+            // X axis
+            const xAxis = d3.axisBottom(xScale).ticks(12)
+            // append axis
+            canvas1.append('g')
+                .attr('tranform', 'translate(1, 12)')
+                .call(xAxis)
+            // Y Scale
+           /*  const yScale = d3.scaleLinear()
+                .domain(minBoasting, maxBoasting)
+                .range([height, 0]) */
+            // avoid going over
+            const dontGoOver = d3.scaleLinear
+
+
+            // Adding Légende
+            // circles
+            let speakers = ['el-p', 'kiler mike', 'zack de la rocha']
+            canvas1.append('g').selectAll('circle')
+                .data(speakers)
+                .enter()
+                .append('circle')
+                    .attr('cx', 50)
+                    .attr('cy', (d, i) => 3 + 150 + i * 25)
+                    .attr('r', 10)
+                    .attr('fill', (d,i) => {
+                        if(speakers == 'el-p'){return 'red'}
+                        else if(speakers == 'killer mike'){return 'green'}
+                        else if(speakers == 'zack de la rocha'){return 'pink'}
+                    })
+            // corresponding text
+            canvas1.append('g').selectAll('text')
+                .data(speakers)
+                 .enter()
+                .append('text')
+                     .attr('x', 70)
+                     .attr('y', (d, i) => 3 + 150 + i * 25)
+                    .text(d => d)
+                    .attr('fill', (d, i) => d3.schemeCategory10[i])
+
+
 
             // Add circles
             canvas1.selectAll('circle')
             .data(data)
             .enter()
             .append('circle')
-                .attr('cx', (d, i) => 50 + i * 90)
+                .attr('cx', (d, i) => 100 + (width-40)/22 * i)
                 .attr('cy', 60)
                 .attr('r', d => d.boasting * 2)
                 .attr('fill', d => {
                     if(d.speaker == "el-p"){return 'green'}
                     else if(d.speaker == 'killerMike'){return 'red'}
                     else if(d.speaker == "zackDeLaRocha"){return 'pink'}
+                    //else if(d.speaker == "pharrellWilliams"){return 'yellow'}
                 })
                 .attr('opacity', 0.8)
+            
+                canvas1.selectAll('text')
+                    .data(speakers)
+                    .enter()
+                    .append('text')
+                        .attr('x',(d, i) => 100 + (width-40)/22 * i)
+                        .attr('y', 60)
+                        .attr('fill', 'black')
+                        .attr('opacity', 1)
+            
 
-            let canvas2 = d3.select('body')
-                .append('svg')
-                .attr('svg', width)
-                .attr('height', height);
+          
+            
 
-            // sum of the 
         })
 
     </script>

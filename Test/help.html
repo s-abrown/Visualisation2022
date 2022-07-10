@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTJ4</title>
+
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script>
+        // window size
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const margin = {top: 30, right: 30, bottom: 70, left: 60},
+            w = 460 - margin.left - margin.right,
+            h = 400 - margin.top - margin.bottom;
+
+        // Link csv file to document
+        d3.csv('RTJ4.csv', function(d) {
+            return {
+                speaker : d.speaker,
+                boasting : +d.mentionBoasting,
+                politics : +d.mentionAntiCapitalism + +d.mentionAntiPolice + +d.mentionAuthority + +d.mentionSlavery + +d.mentionRacism + +d.mentionElections+ +d.mentionRevolution + +d.mentionAntiReligion,
+                person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+                feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+                state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+                object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+                action : +d.mentionWork + +d.mentionCrime,
+                substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+            }
+        }).then(data => {
+            // Check
+            console.log(" Complete data set organised by CATEGORY (≠ subcategory): ", data)
+            // Drawing space N°1 for boasting (El-p, KM, ZDLR)
+            let canvas1 = d3.select('body')
+                .append('svg')
+                .attr('width', width - 20)
+                .attr('height', height - 20)
+
+            // Add circles
+            canvas1.selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+                .attr('cx', (d, i) => 50 + i * 90)
+                .attr('cy', 60)
+                .attr('r', d => d.boasting * 2)
+                .attr('fill', d => {
+                    if(d.speaker == "el-p"){return 'green'}
+                    else if(d.speaker == 'killerMike'){return 'red'}
+                    else if(d.speaker == "zackDeLaRocha"){return 'pink'}
+                })
+                .attr('opacity', 0.8)
+
+            let canvas2 = d3.select('body')
+                .append('svg')
+                .attr('svg', width)
+                .attr('height', height);
+
+            // sum of the 
+        })
+
+    </script>
+    
+</body>
+</html>

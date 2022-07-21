@@ -89,7 +89,7 @@
 
             // Adding Légende
             // circles
-            let speakers = ['el-p', 'killerMike', 'ZackDeLaRocha', 'pharrellWilliams', 'noInstances']
+            let speakers = ['El-p', 'Killer Mike', 'Zack De La Rocha', 'Pharrell Williams', 'no Instances']
             canvas1.append('g').selectAll('circle')
                 .data(speakers)
                 .enter()
@@ -101,11 +101,11 @@
                         else{return 10}
                     })
                     .attr('fill', (h, j) => {
-                        if(speakers[j] == 'el-p'){return 'green'}
-                        else if(speakers[j] == 'killerMike'){return 'red'}
-                        else if(speakers[j] == 'ZackDeLaRocha'){return 'blue'}
-                        else if(speakers[j] == "pharrellWilliams"){return 'orange'}
-                        else if(speakers[j] == 'noInstances'){return 'black'}
+                        if(speakers[j] == 'El-p'){return 'green'}
+                        else if(speakers[j] == 'Killer Mike'){return 'red'}
+                        else if(speakers[j] == 'Zack De La Rocha'){return 'blue'}
+                        else if(speakers[j] == 'Pharrell Williams'){return 'orange'}
+                        else if(speakers[j] == 'no Instances'){return 'black'}
                     })
 
             // corresponding text

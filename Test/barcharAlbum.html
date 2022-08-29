@@ -12,8 +12,7 @@
     </style>
     <!-- <button id= "El" class= "databutton">El-p</button>
     <button id= "KM" class= "databutton">Killer Mike</button>
-    <button id="PWBut">Pharell Williams</button>
-    <button id="OGBut">Other guy</button> -->
+    <button id="PWBut">Pharell Williams</button> -->
 </head>
 <body>
 <!-- Load d3.js -->
@@ -28,15 +27,38 @@
             return {
                 speaker : d.speaker,
                 boasting : +d.mentionBoasting,
+                killerMike : +d.mentionKillerMike,
+                elP : +d.mentionElP,
+                family : +d.mentionFamily,
+                disillusion : +d.mentionDisillusion,
+                threatening : +d.mentionThreatening,
+                anguish : +d.mentionAnguish,
+                existentialism : +d.mentionExistentialism,
+                poverty : +d.mentionPoverty,
+                education : +d.mentionEducation,
+                wealth : +d.mentionWealth,
+                work : +d.mentionWork,
+                crime : +d.mentionCrime,
+                elections : +d.mentionElections,
+                slavery : +d.mentionSlavery,
+                racism : +d.mentionRacism,
+                revolution : +d.mentionRevolution,
+                antiReligion : +d.mentionAntiReligion,
+                authority : +d.mentionAuthority,
+                antiCapitalism : +d.mentionAntiCapitalism,
+                antiPolice : +d.mentionAntiPolice,
+                money : +d.mentionMoney,
+                car : +d.mentionCar, 
+                weapon : +d.mentionWeapon,
+                socialMedia : +d.mentionSocialMedia,
                 person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
-                feeling : +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
                 place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
                 state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
                 object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
-                work : +d.mentionWork,
-                crime :+d.mentionCrime,
+                action : +d.mentionWork + +d.mentionCrime,
                 substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
-                trackNumber : +d.trackNumber, 
+                trackNumber : +d.trackNumber,
             }
         }).then(data => {
             // console.log("My complete data set: ", data)
@@ -78,7 +100,6 @@
             let KMwork = 0
             let boastingAlbumPW = 0
             let boastingAlbumZDR = 0
-            const Elp = []
             for (let i = 0; i < data.length; i++){
                 if (data[i].speaker == 'el-p'){
                 boastingAlbumEl += data[i].boasting
@@ -102,13 +123,7 @@
                 KMcrime += data[i].crime
                 KMwork += data[i].work
                 }
-                if (data[i].speaker == 'pharrellWilliams') {boastingAlbumPW += data[i].boasting}
-                if (data[i].speaker == 'ZackDeLaRocha') {boastingAlbumZDR += data[i].boasting}
             }
-            console.log(boastingAlbumEl)
-            console.log(boastingAlbumKM)
-            console.log(boastingAlbumPW)
-            console.log(boastingAlbumZDR)
 
             // Datasets for the graph
             const El = [
@@ -122,7 +137,7 @@
                 {group: "Crime", value: Elcrime},
                 {group: "Work", value: Elwork}
             ]
-            //console.log(El)
+            
             const KM = [
                 {group: "Boasting", value: boastingAlbumKM}, 
                 {group: "People", value: KMmentionpp},
@@ -134,6 +149,9 @@
                 {group: "Crime", value: KMcrime},
                 {group: "Work", value: KMwork}
             ]
+
+            console.log(El)
+            console.log(KM)
 
 
             // X axis
@@ -150,7 +168,7 @@
             
             // Add Y axis
             const y = d3.scaleLinear()
-                .domain([0, 70])
+                .domain([0, 200])
                 .range([ h, 0]);
             svg.append("g")
                 .attr("class", "myYaxis")
@@ -216,7 +234,7 @@
             // }
 
             // Initialize the plot with the first dataset
-            updateData(El)
+            updateData(KM)
 
             })
 
@@ -257,80 +275,6 @@
             //     }
             // update(El)
         //})
-        
-    //.then(data => {
-    //         // Check
-    //         console.log("My complete data set: ", data)
-    //         // espace de dessin
-    //         let canvas1 = d3.select('body')
-    //             .append('svg')
-    //             .attr('width', width)
-    //             .attr('height', 400)
-
-    //         canvas1.selectAll('circle')
-    //             .data(data)
-    //             .enter()
-    //             .append('circle')
-    //                 .attr('cx', d => d.tr_n * 70)
-    //                 .attr('cy', d => {
-    //                     if(d.speaker == "el-p"){return 100}
-    //                     else if(d.speaker == "killerMike"){return 200}
-    //                     else {return 300}
-    //                 })
-    //                 .attr('r', d => d.feelings * 2)
-    //                 .attr('fill', d => {
-    //                     if(d.speaker == "el-p"){return 'green'}
-    //                     else if(d.speaker == "killerMike"){return 'red'}
-    //                     else {return 'purple'}
-    //                 })
-    //                 .attr('opacity', 0.8) 
-
-    //         let canvas2 = d3.select('body')
-    //             .append('svg')
-    //             .attr('width', width)
-    //             .attr('height', 400)
-
-    //         canvas2.selectAll('circle')
-    //             .data(data)
-    //             .enter()
-    //             .append('circle')
-    //                 .attr('cx', d => d.tr_n * 70)
-    //                 .attr('cy', d => {
-    //                     if(d.speaker == "el-p"){return 100}
-    //                     else if(d.speaker == "killerMike"){return 200}
-    //                     else {return 300}
-    //                 })
-    //                 .attr('r', d => d.people * 2)
-    //                 .attr('fill', d => {
-    //                     if(d.speaker == "el-p"){return 'green'}
-    //                     else if(d.speaker == "killerMike"){return 'red'}
-    //                     else {return 'purple'}
-    //                 })
-    //                 .attr('opacity', 0.8) 
-
-    //         let canvas3 = d3.select('body')
-    //             .append('svg')
-    //             .attr('width', width)
-    //             .attr('height', 400)
-
-    //         canvas3.selectAll('circle')
-    //             .data(data)
-    //             .enter()
-    //             .append('circle')
-    //                 .attr('cx', d => d.tr_n * 70)
-    //                 .attr('cy', d => {
-    //                     if(d.speaker == "el-p"){return 100}
-    //                     else if(d.speaker == "killerMike"){return 200}
-    //                     else {return 300}
-    //                 })
-    //                 .attr('r', d => d.places * 2)
-    //                 .attr('fill', d => {
-    //                     if(d.speaker == "el-p"){return 'green'}
-    //                     else if(d.speaker == "killerMike"){return 'red'}
-    //                     else {return 'purple'}
-    //                 })
-    //                 .attr('opacity', 0.8)   
-    //     })
 </script>
 </body>
 </html>

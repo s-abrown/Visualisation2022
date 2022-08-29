@@ -9,22 +9,18 @@
             background-color: whitesmoke;
             margin: 1px solid;
         }
-        #tooltip{
-            position: absolute;
-            width: 200px;
-            height: auto;
-            padding: 10px;
-            background-color: red;
-            pointer-events: none;
-        }
-        #tooltip.hidden{
-            display: none;
 
-        }
-        #tooltip.p{
-            margin: 0px;
-            font-family:'Times New Roman', Times, serif;
-            font-size: 16px;
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 28px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: #f2b8ec;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
         }
 
     </style>
@@ -86,16 +82,15 @@
                 trackNumber : +d.trackNumber,
             }
         }).then(data => {
-            // // console.log("My complete data set: ", data)
-            //     let canvas1 = d3.select('body').append('svg')
-            //         .attr('width', width)
-            //         .attr('height', 400)
+            // Check data:
+            // console.log("My complete data set: ", data)
 
             // Creating the space for the graph with margins
             const margin = {top: 30, right: 30, bottom: 70, left: 60},
                 w = 460 - margin.left - margin.right,
                 h = 400 - margin.top - margin.bottom;
 
+            // Creating the canvas
             const svg = d3.select("body")
                 .append("svg")
                     .attr("width", w + margin.left + margin.right)
@@ -103,7 +98,7 @@
                 .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
             
-            // Looping through the dataset to obtain what we need for the graph
+            // Looping through the dataset to obtain what we need for the graph:
             let boastingAlbumEl = 0
             let Elmentionpp = 0
             let Elfeelings = 0
@@ -150,6 +145,7 @@
             }
 
             // Datasets for the graph
+            // For El-P
             const El = [
                 {group: "Boasting", value: boastingAlbumEl},
                 {group: "People", value: Elmentionpp},
@@ -162,6 +158,7 @@
                 {group: "Work", value: Elwork}
             ]
             
+            // For KM
             const KM = [
                 {group: "Boasting", value: boastingAlbumKM}, 
                 {group: "People", value: KMmentionpp},
@@ -174,8 +171,9 @@
                 {group: "Work", value: KMwork}
             ]
 
-            console.log(El)
-            console.log(KM)
+            // Checking data:
+            // console.log(El)
+            // console.log(KM)
 
 
             // Adding X axis
@@ -198,118 +196,80 @@
                 .attr("class", "myYaxis")
                 .call(d3.axisLeft(y));
             
+            // Adding event listeners for each button
+            // For El-P's button
             document.getElementById('Elbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     return El
                 })
-            
+            // For KM's button
             document.getElementById('KMbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     return KM
             })
 
-            // // // TEST
-            // function onMouseOver (d, i){
-            //     // get bar's x and y coordinates/values then augment for the tooltip
-            //     var posX = parseFloat(d3.select(this).attr('x')) + x.bandwidth / 2
-            //     var posY = parseFloat(d3.select(this).attr('y')) / 2 + height / 2
-
-            //     // update tooltip's position and value
-            //     d3.select('#tooltip')
-            //         .style('left', posX + 'px')
-            //         .style('top', posY + 'px')
-            //         .select('value').text(i.value)
-
-            //     d3.select ('#tooltip').classed('hidden', false);
-
-            //     d3.select(this).attr('class', 'highlight')
-            //     d3.select(this)
-            //         .transition() // for later idk
-            //         .attr('width',  x.bandwidth() + 5)
-            //         .attr('y', function(d) {return y(d.value) - 10;})
-            //         .attr('height', function(d){return height - y(d.value) + 10;})
-            //         .text('KJKSJHJSF')
-            // }
-
-            
-    
-
-
-            // Original try
-            const Tooltip = d3.select("svg")
-                .append("div")
-                .style("opacity", 0.5)
+            // Making a tooltip
+            var div = d3.select("body").append("div")
                 .attr("class", "tooltip")
-                .style("background-color", "red")
-                .style("border", "solid")
-                .style("border-width", "2px")
-                //.style("border-radius", "5px")
-                .style("padding", "5px")
-                .style("position", "fixed")
-                .style("left", "10px")
-                //.style("right", "50px")
+                .style("opacity", 0);
 
-            const mouseover = function(d) {
-                d3.select("svg")   
-                     Tooltip
-                    .style("opacity", 0)
-                    .style("fill", "red")
-                    console.log('Hello I am here')
-                d3.select(this)
-                    .style("stroke", "black")
-                    .style("opacity", 1)
-                }
-            const mousemove = function(d) {
-                    Tooltip
-                    .html("The exact value of<br>this barre is: " + d.value)
-                    .style("left", "50px")
-                    .style("top", "50px")
-                }
-            const mouseleave = function(d) {
-                    Tooltip
-                    .style("opacity", 0)
-                d3.select(this)
-                    .style("stroke", "none")
-                    .style("opacity", 0.8)
-                }
-
-            // Adding the rectangles
-            function updateData(data) {
-                const u = svg.selectAll("rect")
+            // Creating the rectangles for the bar chart
+            function updateData(data){
+                let update = svg.selectAll('rect')
                     .data(data)
-                    u
-                        .join("rect")
-                        .transition()
-                        .duration(1000)
-                        .attr("x", d => x(d.group))
-                        .attr("y", d => y(d.value))
-                        .attr("width", x.bandwidth())
-                        .attr("height", d => h - y(d.value))
-                        .attr("fill", "#e81ce8")
-                        
-                }
-            
-            // Initialize the plot with the first dataset
+                    .join('rect')
+                    .transition()
+                    .ease(d3.easeBounce)
+                    .duration(1000)
+                    .attr("x", d => x(d.group))
+                    .attr("y", d => y(d.value))
+                    .attr("width", x.bandwidth())
+                    .attr("height", d => h - y(d.value))
+                    .attr("fill", "#e81ce8")
+            }
+
+            // Initialize the plot with the first dataset:
             updateData(El)
 
+            // For El-P's button
             document.getElementById('Elbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     updateData(El)
                 })
             
+            // For KM's button
             document.getElementById('KMbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     updateData(KM)
             })
 
-             const tooltip = svg.selectAll("rect")
-                .on("mouseover", mouseover)
-                .on("mousemove", mousemove)
-                .on("mouseleave", mouseleave)
+            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
+            svg.selectAll("rect")
+            .on("mouseover", function(event,d) {
+                            div.transition()
+                                .duration(200)
+                                .style("opacity", .9);
+                            div.html("The value of this bar is: " + "<br/>" + d.value)
+                                .style("left", (event.pageX) + "px")
+                                .style("top", (event.pageY - 28) + "px");
+                            })
+                            .on("mouseout", function(d) {
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0)
+                            });
+
+
+
+
+
+
+
+             
 
         })
 </script>

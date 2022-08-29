@@ -152,7 +152,7 @@
             console.log(KM)
 
 
-            // X axis
+            // Adding X axis
             const x = d3.scaleBand()
                 .range([0, w])
                 .domain(El.map(d => d.group))
@@ -184,53 +184,49 @@
                     return KM
             })
             
-        
-            // const Tooltip = d3.select("svg")
-            //     .append("div")
-            //     .style("opacity", 0)
-            //     .attr("class", "tooltip")
-            //     .style("background-color", "white")
-            //     .style("border", "solid")
-            //     .style("border-width", "2px")
-            //     .style("border-radius", "5px")
-            //     .style("padding", "5px")
+            const Tooltip = d3.select("svg")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "5px")
 
-            // const mouseover = function(d) {
-            //         Tooltip
-            //         .style("opacity", 1)
-            //     d3.select(this)
-            //         .style("stroke", "black")
-            //         .style("opacity", 1)
-            //     }
-            // const mousemove = function(d) {
-            //         Tooltip
-            //         .html("The exact value of<br>this cell is: " + d.value)
-            //         .style("left", (d3.mouse(this)[0]+70) + "px")
-            //         .style("top", (d3.mouse(this)[1]) + "px")
-            //     }
-            // const mouseleave = function(d) {
-            //         Tooltip
-            //         .style("opacity", 0)
-            //     d3.select(this)
-            //         .style("stroke", "none")
-            //         .style("opacity", 0.8)
-            //     }
+            const mouseover = function(d) {
+                    Tooltip
+                    .style("opacity", 1)
+                d3.select(this)
+                    .style("stroke", "black")
+                    .style("opacity", 1)
+                }
+            const mousemove = function(d) {
+                    Tooltip
+                    .html("The exact value of<br>this barre is: " + d.value)
+                    .style("left", (d3.pointer[0]+70) + "px")
+                    .style("top", (d3.pointer[1]) + "px")
+                }
+            const mouseleave = function(d) {
+                    Tooltip
+                    .style("opacity", 0)
+                d3.select(this)
+                    .style("stroke", "none")
+                    .style("opacity", 0.8)
+                }
 
             function updateData(data) {
                 const u = svg.selectAll("rect")
                     .data(data)
                     u
-                            .join("rect")
-                            .transition()
-                            .duration(1000)
-                            .attr("x", d => x(d.group))
-                            .attr("y", d => y(d.value))
-                            .attr("width", x.bandwidth())
-                            .attr("height", d => h - y(d.value))
-                            .attr("fill", "#e81ce8")
-                        // .on("mouseover", mouseover)
-                        // .on("mousemove", mousemove)
-                        // .on("mouseleave", mouseleave)
+                        .join("rect")
+                        .transition()
+                        .duration(1000)
+                        .attr("x", d => x(d.group))
+                        .attr("y", d => y(d.value))
+                        .attr("width", x.bandwidth())
+                        .attr("height", d => h - y(d.value))
+                        .attr("fill", "#e81ce8")
                 }
             
             // Initialize the plot with the first dataset
@@ -247,6 +243,11 @@
                     e.preventDefault();
                     updateData(KM)
             })
+
+            const tooltip = svg.selectAll("rect")
+                .on("mouseover", mouseover)
+                .on("mousemove", mousemove)
+                .on("mouseleave", mouseleave)
 
         })
 </script>

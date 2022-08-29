@@ -168,7 +168,7 @@
             
             // Add Y axis
             const y = d3.scaleLinear()
-                .domain([0, 200])
+                .domain([0, 160])
                 .range([ h, 0]);
             svg.append("g")
                 .attr("class", "myYaxis")
@@ -186,19 +186,51 @@
             //         .attr("fill", "#69b3a2")
             // })
         
+            const Tooltip = d3.select("svg")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "2px")
+                .style("border-radius", "5px")
+                .style("padding", "5px")
 
+            const mouseover = function(d) {
+                    Tooltip
+                    .style("opacity", 1)
+                d3.select(this)
+                    .style("stroke", "black")
+                    .style("opacity", 1)
+                }
+            const mousemove = function(d) {
+                    Tooltip
+                    .html("The exact value of<br>this cell is: " + d.value)
+                    .style("left", (d3.mouse(this)[0]+70) + "px")
+                    .style("top", (d3.mouse(this)[1]) + "px")
+                }
+            const mouseleave = function(d) {
+                    Tooltip
+                    .style("opacity", 0)
+                d3.select(this)
+                    .style("stroke", "none")
+                    .style("opacity", 0.8)
+                }
             function updateData(data) {
                 const u = svg.selectAll("rect")
                     .data(data)
                     u
-                        .join("rect")
-                        .transition()
-                        .duration(1000)
-                        .attr("x", d => x(d.group))
-                        .attr("y", d => y(d.value))
-                        .attr("width", x.bandwidth())
-                        .attr("height", d => h - y(d.value))
-                        .attr("fill", "#69b3a2")
+                            .join("rect")
+                            .transition()
+                            .duration(1000)
+                            .attr("x", d => x(d.group))
+                            .attr("y", d => y(d.value))
+                            .attr("width", x.bandwidth())
+                            .attr("height", d => h - y(d.value))
+                            .attr("fill", "#e81ce8")
+                        .on("mouseover", mouseover)
+                        .on("mousemove", mousemove)
+                        .on("mouseleave", mouseleave)
                 }
 
             d3.select(".databutton").on("id", updateData)

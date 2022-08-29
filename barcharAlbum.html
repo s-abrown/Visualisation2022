@@ -1,0 +1,336 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yankee and the Brave</title>
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+    </style>
+    <!-- <button id= "El" class= "databutton">El-p</button>
+    <button id= "KM" class= "databutton">Killer Mike</button>
+    <button id="PWBut">Pharell Williams</button>
+    <button id="OGBut">Other guy</button> -->
+</head>
+<body>
+<!-- Load d3.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+<!-- Create a div where the graph will take place -->
+<script>
+    const width = window.innerWidth;
+    const height = window.innerHeight; 
+
+        d3.csv('RTJ4.csv', function (d) {
+            return {
+                speaker : d.speaker,
+                boasting : +d.mentionBoasting,
+                person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+                feeling : +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+                state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+                object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+                work : +d.mentionWork,
+                crime :+d.mentionCrime,
+                substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+                trackNumber : +d.trackNumber, 
+            }
+        }).then(data => {
+            // console.log("My complete data set: ", data)
+            // let canvas1 = d3.select('body')
+            //     .append('svg')
+            //     .attr('width', width)
+            //     .attr('height', 400)
+
+            // Creating the space for the graph with margins
+            const margin = {top: 30, right: 30, bottom: 70, left: 60},
+                w = 460 - margin.left - margin.right,
+                h = 400 - margin.top - margin.bottom;
+
+            const svg = d3.select("body")
+                .append("svg")
+                    .attr("width", w + margin.left + margin.right)
+                    .attr("height", h + margin.top + margin.bottom)
+                .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+            
+            // Looping through the dataset to obtain what we need for the graph
+            let boastingAlbumEl = 0
+            let Elmentionpp = 0
+            let Elfeelings = 0
+            let Elplaces = 0
+            let Elsubstances = 0
+            let Elstate = 0
+            let Elobjs = 0
+            let Elcrime = 0
+            let Elwork = 0
+            let boastingAlbumKM = 0
+            let KMmentionpp = 0
+            let KMfeelings = 0
+            let KMplaces = 0
+            let KMsubstances = 0
+            let KMstate = 0
+            let KMobjs = 0
+            let KMcrime = 0
+            let KMwork = 0
+            let boastingAlbumPW = 0
+            let boastingAlbumZDR = 0
+            const Elp = []
+            for (let i = 0; i < data.length; i++){
+                if (data[i].speaker == 'el-p'){
+                boastingAlbumEl += data[i].boasting
+                Elmentionpp += data[i].person
+                Elfeelings += data[i].feeling
+                Elplaces += data[i].place
+                Elsubstances += data[i].substanceUse
+                Elstate += data[i].state
+                Elobjs += data[i].object
+                Elcrime += data[i].crime
+                Elwork += data[i].work
+                }
+                if (data[i].speaker == 'killerMike'){
+                boastingAlbumKM += data[i].boasting
+                KMmentionpp += data[i].person
+                KMfeelings += data[i].feeling
+                KMplaces += data[i].place
+                KMsubstances += data[i].substanceUse
+                KMstate += data[i].state
+                KMobjs += data[i].object
+                KMcrime += data[i].crime
+                KMwork += data[i].work
+                }
+                if (data[i].speaker == 'pharrellWilliams') {boastingAlbumPW += data[i].boasting}
+                if (data[i].speaker == 'ZackDeLaRocha') {boastingAlbumZDR += data[i].boasting}
+            }
+            console.log(boastingAlbumEl)
+            console.log(boastingAlbumKM)
+            console.log(boastingAlbumPW)
+            console.log(boastingAlbumZDR)
+
+            // Datasets for the graph
+            const El = [
+                {group: "Boasting", value: boastingAlbumEl},
+                {group: "People", value: Elmentionpp},
+                {group: "Feelings", value: Elfeelings},
+                {group: "Places", value: Elplaces},
+                {group: "Substance use", value: Elsubstances},
+                {group: "State of being", value: Elstate},
+                {group: "Objects", value: Elobjs},
+                {group: "Crime", value: Elcrime},
+                {group: "Work", value: Elwork}
+            ]
+            //console.log(El)
+            const KM = [
+                {group: "Boasting", value: boastingAlbumKM}, 
+                {group: "People", value: KMmentionpp},
+                {group: "Feelings", value: KMfeelings},
+                {group: "Places", value: KMplaces},
+                {group: "Substance use", value: KMsubstances},
+                {group: "State of being", value: KMstate},
+                {group: "Objects", value: KMobjs},
+                {group: "Crime", value: KMcrime},
+                {group: "Work", value: KMwork}
+            ]
+
+
+            // X axis
+            const x = d3.scaleBand()
+                .range([0, w])
+                .domain(El.map(d => d.group))
+                .padding(0.2);
+            svg.append("g")
+                .attr("transform", `translate(0,${h})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                    .attr("transform", "translate(-10,0)rotate(-45)")
+                    .style("text-anchor", "end");
+            
+            // Add Y axis
+            const y = d3.scaleLinear()
+                .domain([0, 70])
+                .range([ h, 0]);
+            svg.append("g")
+                .attr("class", "myYaxis")
+                .call(d3.axisLeft(y));
+                
+            // Bars
+            // svg.selectAll("mybar")
+            //     .data(El)
+            //     .enter()
+            //     .append("rect")
+            //         .attr("x", d => x(d.group))
+            //         .attr("y", d => y(d.value))
+            //         .attr("width", x.bandwidth())
+            //         .attr("height", d => h - y(d.value))
+            //         .attr("fill", "#69b3a2")
+            // })
+        
+
+            function updateData(data) {
+                const u = svg.selectAll("rect")
+                    .data(data)
+                    u
+                        .join("rect")
+                        .transition()
+                        .duration(1000)
+                        .attr("x", d => x(d.group))
+                        .attr("y", d => y(d.value))
+                        .attr("width", x.bandwidth())
+                        .attr("height", d => h - y(d.value))
+                        .attr("fill", "#69b3a2")
+                }
+
+            d3.select(".databutton").on("id", updateData)
+
+
+            // // Creating the buttons to switch between datasets
+            // let btnElp = document.createElement("button")
+            // btnElp.innerHTML = "El-p"
+            // btnElp.setAttribute("id", "Elpbutton")
+            // btnElp.setAttribute("onclick", "updateData('El')")
+            // document.body.append(btnElp)
+
+            // let btnKiMi = document.createElement("button")
+            // btnKiMi.innerHTML = "Killer Mike"
+            // btnKiMi.setAttribute("onclick", "updateData('KM')")
+            // btnElp.setAttribute("id", "KiMibutton")
+            // document.body.append(btnKiMi)
+            // let btnKM = document.getElementById(KiMibutton)
+            
+
+            // function update(data) {
+            // const u = svg.selectAll("rect")
+            //     .data(data)
+            //     u
+            //         .join("rect")
+            //         .transition()
+            //         .duration(1000)
+            //         .attr("x", d => x(d.group))
+            //         .attr("y", d => y(d.value))
+            //         .attr("width", x.bandwidth())
+            //         .attr("height", d => h - y(d.value))
+            //         .attr("fill", "#69b3a2")
+            // }
+
+            // Initialize the plot with the first dataset
+            updateData(El)
+
+            })
+
+            // // X axis
+            // const x = d3.scaleBand()
+            // .range([ 0, w ])
+            // .domain(El.map(d => d.group))
+            // .padding(0.2);
+            // svg.append("g")
+            // .attr("transform", `translate(0,${h})`)
+            // .call(d3.axisBottom(x))
+
+            // // Add Y axis
+            // const y = d3.scaleLinear()
+            // .domain([0, 10])
+            // .range([ h, 0]);
+            // svg.append("g")
+            // .attr("class", "myYaxis")
+            // .call(d3.axisLeft(y));
+            
+            // svg.selectAll("rect")
+            // .join('rect')
+            // .attr("x", d => x(d.group))
+            // .attr("y", d => y(d.value))
+
+            // function update(data) {
+            //     var u = svg.selectAll("rect")
+            //         .data(data)
+            //         u
+            //             .join("rect")
+            //             .transition()
+            //             .duration(1000)
+            //             .attr("x", d => x(d.group))
+            //             .attr("y", d => y(d.value))
+            //             .attr("width", x.bandwidth())
+            //             .attr("height", d => h - y(d.value))
+            //             .attr("fill", "#69b3a2")
+            //     }
+            // update(El)
+        //})
+        
+    //.then(data => {
+    //         // Check
+    //         console.log("My complete data set: ", data)
+    //         // espace de dessin
+    //         let canvas1 = d3.select('body')
+    //             .append('svg')
+    //             .attr('width', width)
+    //             .attr('height', 400)
+
+    //         canvas1.selectAll('circle')
+    //             .data(data)
+    //             .enter()
+    //             .append('circle')
+    //                 .attr('cx', d => d.tr_n * 70)
+    //                 .attr('cy', d => {
+    //                     if(d.speaker == "el-p"){return 100}
+    //                     else if(d.speaker == "killerMike"){return 200}
+    //                     else {return 300}
+    //                 })
+    //                 .attr('r', d => d.feelings * 2)
+    //                 .attr('fill', d => {
+    //                     if(d.speaker == "el-p"){return 'green'}
+    //                     else if(d.speaker == "killerMike"){return 'red'}
+    //                     else {return 'purple'}
+    //                 })
+    //                 .attr('opacity', 0.8) 
+
+    //         let canvas2 = d3.select('body')
+    //             .append('svg')
+    //             .attr('width', width)
+    //             .attr('height', 400)
+
+    //         canvas2.selectAll('circle')
+    //             .data(data)
+    //             .enter()
+    //             .append('circle')
+    //                 .attr('cx', d => d.tr_n * 70)
+    //                 .attr('cy', d => {
+    //                     if(d.speaker == "el-p"){return 100}
+    //                     else if(d.speaker == "killerMike"){return 200}
+    //                     else {return 300}
+    //                 })
+    //                 .attr('r', d => d.people * 2)
+    //                 .attr('fill', d => {
+    //                     if(d.speaker == "el-p"){return 'green'}
+    //                     else if(d.speaker == "killerMike"){return 'red'}
+    //                     else {return 'purple'}
+    //                 })
+    //                 .attr('opacity', 0.8) 
+
+    //         let canvas3 = d3.select('body')
+    //             .append('svg')
+    //             .attr('width', width)
+    //             .attr('height', 400)
+
+    //         canvas3.selectAll('circle')
+    //             .data(data)
+    //             .enter()
+    //             .append('circle')
+    //                 .attr('cx', d => d.tr_n * 70)
+    //                 .attr('cy', d => {
+    //                     if(d.speaker == "el-p"){return 100}
+    //                     else if(d.speaker == "killerMike"){return 200}
+    //                     else {return 300}
+    //                 })
+    //                 .attr('r', d => d.places * 2)
+    //                 .attr('fill', d => {
+    //                     if(d.speaker == "el-p"){return 'green'}
+    //                     else if(d.speaker == "killerMike"){return 'red'}
+    //                     else {return 'purple'}
+    //                 })
+    //                 .attr('opacity', 0.8)   
+    //     })
+</script>
+</body>
+</html>

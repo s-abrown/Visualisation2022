@@ -10,9 +10,8 @@
             margin: 1px solid;
         }
     </style>
-    <button id= "El">El-p</button>
-    <button id= "KM">Killer Mike</button>
-    <button id="PWBut">Pharell Williams</button>
+    <button id= "Elbutton">El-p</button>
+    <button id= "KMbutton">Killer Mike</button>
 </head>
 <body>
 <!-- Load d3.js -->
@@ -61,22 +60,22 @@
                 trackNumber : +d.trackNumber,
             }
         }).then(data => {
-            // console.log("My complete data set: ", data)
-                let canvas1 = d3.select('body').append('svg')
-                    .attr('width', width)
-                    .attr('height', 400)
+            // // console.log("My complete data set: ", data)
+            //     let canvas1 = d3.select('body').append('svg')
+            //         .attr('width', width)
+            //         .attr('height', 400)
 
-            // // Creating the space for the graph with margins
-            // const margin = {top: 30, right: 30, bottom: 70, left: 60},
-            //     w = 460 - margin.left - margin.right,
-            //     h = 400 - margin.top - margin.bottom;
+            // Creating the space for the graph with margins
+            const margin = {top: 30, right: 30, bottom: 70, left: 60},
+                w = 460 - margin.left - margin.right,
+                h = 400 - margin.top - margin.bottom;
 
-            // const svg = d3.select("body")
-            //     .append("svg")
-            //         .attr("width", w + margin.left + margin.right)
-            //         .attr("height", h + margin.top + margin.bottom)
-            //     .append("g")
-            //         .attr("transform", `translate(${margin.left},${margin.top})`);
+            const svg = d3.select("body")
+                .append("svg")
+                    .attr("width", w + margin.left + margin.right)
+                    .attr("height", h + margin.top + margin.bottom)
+                .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
             
             // Looping through the dataset to obtain what we need for the graph
             let boastingAlbumEl = 0
@@ -172,18 +171,19 @@
             svg.append("g")
                 .attr("class", "myYaxis")
                 .call(d3.axisLeft(y));
-                
-            // Bars
-            // svg.selectAll("mybar")
-            //     .data(El)
-            //     .enter()
-            //     .append("rect")
-            //         .attr("x", d => x(d.group))
-            //         .attr("y", d => y(d.value))
-            //         .attr("width", x.bandwidth())
-            //         .attr("height", d => h - y(d.value))
-            //         .attr("fill", "#69b3a2")
-            // })
+            
+            document.getElementById('Elbutton')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    return El
+                })
+            
+            document.getElementById('KMbutton')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    return KM
+            })
+            
         
             // const Tooltip = d3.select("svg")
             //     .append("div")
@@ -215,6 +215,7 @@
             //         .style("stroke", "none")
             //         .style("opacity", 0.8)
             //     }
+
             function updateData(data) {
                 const u = svg.selectAll("rect")
                     .data(data)
@@ -227,64 +228,27 @@
                             .attr("width", x.bandwidth())
                             .attr("height", d => h - y(d.value))
                             .attr("fill", "#e81ce8")
-                        .on("mouseover", mouseover)
-                        .on("mousemove", mousemove)
-                        .on("mouseleave", mouseleave)
+                        // .on("mouseover", mouseover)
+                        // .on("mousemove", mousemove)
+                        // .on("mouseleave", mouseleave)
                 }
-
-            // function updateData(data) {
-            //     const u = svg.selectAll("rect")
-            //         .data(data)
-            //         u
-            //                 .join("rect")
-            //                 .transition()
-            //                 .duration(1000)
-            //                 .attr("x", d => x(d.group))
-            //                 .attr("y", d => y(d.value))
-            //                 .attr("width", x.bandwidth())
-            //                 .attr("height", d => h - y(d.value))
-            //                 .attr("fill", "#e81ce8")
-            //             // .on("mouseover", mouseover)
-            //             // .on("mousemove", mousemove)
-            //             // .on("mouseleave", mouseleave)
-            //     }
-
-            // d3.select(".databutton").on("id", updateData)
-
-
-            // // Creating the buttons to switch between datasets
-            // let btnElp = document.createElement("button")
-            // btnElp.innerHTML = "El-p"
-            // btnElp.setAttribute("id", "Elpbutton")
-            // btnElp.setAttribute("onclick", "updateData('El')")
-            // document.body.append(btnElp)
-
-            // let btnKiMi = document.createElement("button")
-            // btnKiMi.innerHTML = "Killer Mike"
-            // btnKiMi.setAttribute("onclick", "updateData('KM')")
-            // btnElp.setAttribute("id", "KiMibutton")
-            // document.body.append(btnKiMi)
-            // let btnKM = document.getElementById(KiMibutton)
             
-
-            // function update(data) {
-            // const u = svg.selectAll("rect")
-            //     .data(data)
-            //     u
-            //         .join("rect")
-            //         .transition()
-            //         .duration(1000)
-            //         .attr("x", d => x(d.group))
-            //         .attr("y", d => y(d.value))
-            //         .attr("width", x.bandwidth())
-            //         .attr("height", d => h - y(d.value))
-            //         .attr("fill", "#69b3a2")
-            // }
-
             // Initialize the plot with the first dataset
-            // updateData(El)
+            updateData(El)
 
+            document.getElementById('Elbutton')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    updateData(El)
+                })
+            
+            document.getElementById('KMbutton')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    updateData(KM)
             })
+
+        })
 </script>
 </body>
 </html>

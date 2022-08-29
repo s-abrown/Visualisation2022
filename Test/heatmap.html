@@ -173,39 +173,33 @@
             .range(["#f2b8ec", "#cc006d"])
             .domain([0, 15])
 
-          // CREATING A HIGHLIGHTER/ TOOLTIP TO HOVER OVER EACH SQUARE VERSION 1
-          let tooltip = d3.select("canvas1")
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
+          // // CREATING A HIGHLIGHTER/ TOOLTIP TO HOVER OVER EACH SQUARE VERSION 1
+          // let tooltip = d3.select("canvas1")
+          //   .append("div")
+          //   .style("opacity", 0)
+          //   .attr("class", "tooltip")
+          //   .style("background-color", "white")
+          //   .style("border", "solid")
+          //   .style("border-width", "2px")
+          //   .style("border-radius", "5px")
+          //   .style("padding", "5px")
 
-          // THREE FUNCTIONS TO SHOW THE READER INFO WHEN HOVERING OVER A SQUARE
-          let mouseover = function(d) {
-            tooltip.style("opacity", 1)
-          }
-          let mousemove = function(d) {
-            tooltip
-              .html("The exact value of<br>this cell is: " + d.value)
-              .style("left", (d3.pointer(this)[0]+70) + "px")
-              .style("top", (d3.pointer(this)[1]) + "px")
-          }
-          let mouseleave = function(d) {
-            tooltip.style("opacity", 0)
-          }
-
-          let btnElp = document.getElementById('btnElp')
-            .addEventListener('click', function(e){
-              data.filter(function(d){
-                return d.speaker == "el-p" })
-           })
-          let btnKM = document.getElementById('btnKM')
+          // // THREE FUNCTIONS TO SHOW THE READER INFO WHEN HOVERING OVER A SQUARE
+          // let mouseover = function(d) {
+          //   tooltip.style("opacity", 1)
+          // }
+          // let mousemove = function(d) {
+          //   tooltip
+          //     .html("The exact value of<br>this cell is: " + d.value)
+          //     .style("left", (d3.pointer(this)[0]+70) + "px")
+          //     .style("top", (d3.pointer(this)[1]) + "px")
+          // }
+          // let mouseleave = function(d) {
+          //   tooltip.style("opacity", 0)
+          // }
 
           
+
 
         // TOOLTIP ATTEMPT NUMBER 2
         let div = d3.select("body").append("div")	
@@ -213,10 +207,11 @@
           .style("opacity", 0);
 
           // ADDING THE SQUARES
+        function feedingData(therightdata){
           for(let i=0 ; i< 25 ; i++){
             canvas1.selectAll()
               .data(data.filter(function(d){
-                return d.speaker == "killerMike" }))
+                return d.speaker == therightdata }))
               .enter()
               .append("rect")
                 .attr("x", 100 + (i * 32))
@@ -329,26 +324,41 @@
                     return myColour(+d.substanceUse)
                   }
                 })
+
+              feedingData("el-p")
+
+              document.getElementById('btnElp')
+                .addEventListener('click', function(e){
+                  e.preventDefault();
+                  therightdata("el-p")
+              })
+
+              document.getElementById('btnKM')
+                .addEventListener('click', function(e){
+                  e.preventDefault();
+                  therightdata("killerMike")
+              })
                 // TOOLTIP INTERACTION OPTION 1
                 //.on("mouseover", mouseover)
                 //.on("mousemove", mousemove)
                 //.on("mouseleave", mouseleave)
                 // TOOLTIP INTERACTION OPTION 2
-                .on("mouseover", function(d) {		
-            div.transition()		
-                .duration(200)		
-                .style("opacity", .9);		
-            div	.html("the value of this cell is:" + "<br/>"  + +d.killerMike)	
-                .style("left", (d3.event.pageX) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px");	
-            })					
-        .on("mouseout", function(d) {		
-            div.transition()		
-                .duration(500)		
-                .style("opacity", 0);	
-        });
+        //         .on("mouseover", function(d) {		
+        //     div.transition()		
+        //         .duration(200)		
+        //         .style("opacity", .9);		
+        //     div	.html("the value of this cell is:" + "<br/>"  + +d.killerMike)	
+        //         .style("left", (d3.event.pageX) + "px")		
+        //         .style("top", (d3.event.pageY - 28) + "px");	
+        //     })					
+        // .on("mouseout", function(d) {		
+        //     div.transition()		
+        //         .duration(500)		
+        //         .style("opacity", 0);	
+        // });
 
           }
+        }
 
 
 })

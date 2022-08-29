@@ -9,11 +9,37 @@
             background-color: whitesmoke;
             margin: 1px solid;
         }
+        #tooltip{
+            position: absolute;
+            width: 200px;
+            height: auto;
+            padding: 10px;
+            background-color: red;
+            pointer-events: none;
+        }
+        #tooltip.hidden{
+            display: none;
+
+        }
+        #tooltip.p{
+            margin: 0px;
+            font-family:'Times New Roman', Times, serif;
+            font-size: 16px;
+        }
+
     </style>
     <button id= "Elbutton">El-p</button>
     <button id= "KMbutton">Killer Mike</button>
 </head>
 <body>
+
+<!-- TEST FOR TOOLTIP-->
+
+<!-- <div id="tooltip" class="hidden">
+    <p><strong> Value is: </strong></p>
+    <p><span id="value">  </span></p>
+</div> -->
+
 <!-- Load d3.js -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
@@ -183,20 +209,54 @@
                     e.preventDefault();
                     return KM
             })
+
+            // // // TEST
+            // function onMouseOver (d, i){
+            //     // get bar's x and y coordinates/values then augment for the tooltip
+            //     var posX = parseFloat(d3.select(this).attr('x')) + x.bandwidth / 2
+            //     var posY = parseFloat(d3.select(this).attr('y')) / 2 + height / 2
+
+            //     // update tooltip's position and value
+            //     d3.select('#tooltip')
+            //         .style('left', posX + 'px')
+            //         .style('top', posY + 'px')
+            //         .select('value').text(i.value)
+
+            //     d3.select ('#tooltip').classed('hidden', false);
+
+            //     d3.select(this).attr('class', 'highlight')
+            //     d3.select(this)
+            //         .transition() // for later idk
+            //         .attr('width',  x.bandwidth() + 5)
+            //         .attr('y', function(d) {return y(d.value) - 10;})
+            //         .attr('height', function(d){return height - y(d.value) + 10;})
+            //         .text('KJKSJHJSF')
+            // }
+
             
+    
+
+
+            // Original try
             const Tooltip = d3.select("svg")
                 .append("div")
-                .style("opacity", 0)
+                .style("opacity", 0.5)
                 .attr("class", "tooltip")
-                .style("background-color", "white")
+                .style("background-color", "red")
                 .style("border", "solid")
                 .style("border-width", "2px")
-                .style("border-radius", "5px")
+                //.style("border-radius", "5px")
                 .style("padding", "5px")
+                .style("position", "fixed")
+                .style("left", "10px")
+                //.style("right", "50px")
 
             const mouseover = function(d) {
-                    Tooltip
-                    .style("opacity", 1)
+                d3.select("svg")   
+                     Tooltip
+                    .style("opacity", 0)
+                    .style("fill", "red")
+                    console.log('Hello I am here')
                 d3.select(this)
                     .style("stroke", "black")
                     .style("opacity", 1)
@@ -204,8 +264,8 @@
             const mousemove = function(d) {
                     Tooltip
                     .html("The exact value of<br>this barre is: " + d.value)
-                    .style("left", (d3.pointer[0]+70) + "px")
-                    .style("top", (d3.pointer[1]) + "px")
+                    .style("left", "50px")
+                    .style("top", "50px")
                 }
             const mouseleave = function(d) {
                     Tooltip
@@ -215,6 +275,7 @@
                     .style("opacity", 0.8)
                 }
 
+            // Adding the rectangles
             function updateData(data) {
                 const u = svg.selectAll("rect")
                     .data(data)
@@ -227,6 +288,7 @@
                         .attr("width", x.bandwidth())
                         .attr("height", d => h - y(d.value))
                         .attr("fill", "#e81ce8")
+                        
                 }
             
             // Initialize the plot with the first dataset
@@ -244,7 +306,7 @@
                     updateData(KM)
             })
 
-            const tooltip = svg.selectAll("rect")
+             const tooltip = svg.selectAll("rect")
                 .on("mouseover", mouseover)
                 .on("mousemove", mousemove)
                 .on("mouseleave", mouseleave)

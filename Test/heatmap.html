@@ -111,8 +111,8 @@
             .selectAll("text")
               .attr("transform", "translate(-10,2)rotate(-45)")
               .style("text-anchor", "end")
-              .style("font-size", 10)
-              .style("fill", "#e81ce8")
+              .style("font-size", 15)
+              .style("fill", "#6f00de")
               //.attr("transform",`translate(${0},${height - 20})`);
 
             // Y AXIS AND SCALE
@@ -128,13 +128,13 @@
             .call(yAxisGenerator)
             .attr("transform", 'translate(90, 0)')
             .selectAll("text")
-              .style("font-size", 10)
-              .style("fill", "#e81ce8")
+              .style("font-size", 15)
+              .style("fill", "#6f00de")
 
           // COLOUR SCALE FOR THE SQUARES
           let myColour = d3.scaleLinear()
-            .range(["#f2b8ec", "#cc006d"])
-            .domain([0, 15])
+            .range(["#ffdef3", "#6f00de"])
+            .domain([0, 24])
 
           // Making a tooltip
           var div = d3.select("body").append("div")
@@ -258,6 +258,8 @@
                     return myColour(+d.substanceUse)
                   }
                 })
+                // Makign the tooltip available after clicking the buttons
+                tooltip()
               }
 
             document.getElementById('btnElp')
@@ -381,6 +383,8 @@
                       }
                     })
                   }
+                  // Makign the tooltip available after clicking the buttons
+                  tooltip()
             })
 
             document.getElementById('btnKM')
@@ -504,31 +508,57 @@
                       }
                     })
                   }
+                  // Makign the tooltip available after clicking the buttons
+                  tooltip()
             })
 
-              
-
-
-            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
-            canvas1.selectAll("rect")
-              .on("mouseover", function(event, d) {
-
-                div.transition()
-                    .duration(200)
-                    .style("opacity", .9)
-                div.html(`${d.speaker} has mentioned ${event.target.value} <br/> ${d.value} times`) 
-                    .style("left", (event.pageX) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                            })
-              .on("mouseout", function(d) {
-                div.transition()
-                    .duration(500)
-                    .style("opacity", 0)
-                });
-
+            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar
+            // In a function so that it may be used repeatedly after clicking the buttons
+            function tooltip(){
+              canvas1.selectAll("rect")
+                .on("mouseover", function(event, d) {
+                  // To retrieve the RGBs of each cell in order to determine their value
+                  //console.log(d3.select(event.target).attr('style'))
+                  console.log(event.target)
+                  let value
+                  let table = []
+                  for (let i = 0; i < 25; i++){
+                    table.push(`fill: ${myColour(i)};`)
+                  }
+                  for (let i = 0; i < table.length; i++){
+                    if (d3.select(event.target).attr('style') == table[i]){
+                      value = i
+                    }}
+                  console.log(d3.select(event.target).attr('style'))
+                  console.log(d3.select(event.target).attr('x'))
+                  let table2 = [['Killer Mike', 100], ['El-P', 132], ['family', 164], ['boasting', 196], ['disillusion', 228], ['threatening', 260], ['anguish', 292], ['existentialism', 324], ['anti Capitalism', 356], ['anti police', 388], ['authority', 420], ['slavery', 452], ['racism', 484], ['elections', 516], ['revolution', 548], ['anti religion', 580], ['poverty', 612], ['education', 644], ['wealth', 676], ['car', 708], ['money', 714], ['weapons', 772], ['social media', 804], ['work', 836], ['crime', 868]]
+                  let topic 
+                  for (let i = 0; i < table2.length; i++){
+                    if (d3.select(event.target).attr('x') == table2[i][1]){
+                        topic = table2[i][0]
+                    }
+                  }
+                  let speaker 
+                  if (d.speaker == 'killerMike'){
+                    speaker = 'Killer Mike'
+                  } else if (d.speaker == 'el-p'){
+                    speaker = 'El-P'
+                  }
+                  div.transition()
+                      .duration(200)
+                      .style("opacity", .9)
+                  div.html(`${speaker} has mentioned ${topic} <br/> ${value} time(s)`) 
+                      .style("left", (event.pageX) + "px")
+                      .style("top", (event.pageY - 28) + "px")
+                      //console.log(d.value)
+                              })
+                .on("mouseout", function(d) {
+                  div.transition()
+                      .duration(500)
+                      .style("opacity", 0)
+                  });
+              }
 })
-
-
 
 
     </script>

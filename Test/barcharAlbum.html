@@ -14,7 +14,7 @@
             position: absolute;
             text-align: center;
             width: 60px;
-            height: 55px;
+            height: 85px;
             padding: 2px;
             font: 12px sans-serif;
             background: #f2b8ec;
@@ -82,8 +82,8 @@
 
             // Creating the space for the graph with margins
             const margin = {top: 30, right: 30, bottom: 70, left: 60},
-                w = 460 - margin.left - margin.right,
-                h = 400 - margin.top - margin.bottom;
+                w = 860 - margin.left - margin.right,
+                h = 800 - margin.top - margin.bottom;
 
             // Creating the canvas
             const svg = d3.select("body")
@@ -181,7 +181,9 @@
                 .call(d3.axisBottom(x))
                 .selectAll("text")
                     .attr("transform", "translate(-10,0)rotate(-45)")
-                    .style("text-anchor", "end");
+                    .style("text-anchor", "end")
+                    .style("font-size", 15)
+                    .style("color", "purple")
             
             // Add Y axis
             const y = d3.scaleLinear()
@@ -217,7 +219,7 @@
                     .join('rect')
                     .transition()
                     .ease(d3.easeBounce)
-                    .duration(1000)
+                    .duration(1500)
                     .attr("x", d => x(d.group))
                     .attr("y", d => y(d.value))
                     .attr("width", x.bandwidth())
@@ -251,8 +253,9 @@
             .on("mouseover", function(event,d) {
                             div.transition()
                                 .duration(200)
-                                .style("opacity", .9);
-                            div.html(`${name} has mentioned ${d.group} <br/> ${d.value} times`)
+                                .style("opacity", .9)
+                                .style("border", "solid 2px")
+                            div.html(`${name} has mentioned ${d.group} <br/> ${d.value} times throughout the album`)
                                 .style("left", (event.pageX) + "px")
                                 .style("top", (event.pageY - 28) + "px");
                             })

@@ -142,28 +142,28 @@
             // Datasets for the graph
             // For El-P
             const El = [
-                {group: "Boasting", value: boastingAlbumEl},
-                {group: "People", value: Elmentionpp},
-                {group: "Feelings", value: Elfeelings},
-                {group: "Places", value: Elplaces},
-                {group: "Substance use", value: Elsubstances},
-                {group: "State of being", value: Elstate},
-                {group: "Objects", value: Elobjs},
-                {group: "Crime", value: Elcrime},
-                {group: "Work", value: Elwork}
+                {group: "boasting", value: boastingAlbumEl},
+                {group: "people", value: Elmentionpp},
+                {group: "feelings", value: Elfeelings},
+                {group: "places", value: Elplaces},
+                {group: "substance use", value: Elsubstances},
+                {group: "state of being", value: Elstate},
+                {group: "objects", value: Elobjs},
+                {group: "crime", value: Elcrime},
+                {group: "work", value: Elwork}
             ]
             
             // For KM
             const KM = [
-                {group: "Boasting", value: boastingAlbumKM}, 
-                {group: "People", value: KMmentionpp},
-                {group: "Feelings", value: KMfeelings},
-                {group: "Places", value: KMplaces},
-                {group: "Substance use", value: KMsubstances},
-                {group: "State of being", value: KMstate},
-                {group: "Objects", value: KMobjs},
-                {group: "Crime", value: KMcrime},
-                {group: "Work", value: KMwork}
+                {group: "boasting", value: boastingAlbumKM}, 
+                {group: "people", value: KMmentionpp},
+                {group: "feelings", value: KMfeelings},
+                {group: "places", value: KMplaces},
+                {group: "substance use", value: KMsubstances},
+                {group: "state of being", value: KMstate},
+                {group: "objects", value: KMobjs},
+                {group: "crime", value: KMcrime},
+                {group: "work", value: KMwork}
             ]
 
             // Checking data:
@@ -228,11 +228,14 @@
             // Initialize the plot with the first dataset:
             updateData(El)
 
+            let name = "El-p"
+
             // For El-P's button
             document.getElementById('Elbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     updateData(El)
+                    name = "El-p"
                 })
             
             // For KM's button
@@ -240,6 +243,7 @@
                 .addEventListener('click', function(e){
                     e.preventDefault();
                     updateData(KM)
+                    name = "Killer Mike"
             })
 
             // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
@@ -248,7 +252,7 @@
                             div.transition()
                                 .duration(200)
                                 .style("opacity", .9);
-                            div.html("The value of this bar is: " + "<br/>" + d.value)
+                            div.html(`${name} has mentioned ${d.group} <br/> ${d.value} times`)
                                 .style("left", (event.pageX) + "px")
                                 .style("top", (event.pageY - 28) + "px");
                             })
@@ -257,14 +261,6 @@
                                 .duration(500)
                                 .style("opacity", 0)
                             });
-
-
-
-
-
-
-
-             
 
         })
 </script>

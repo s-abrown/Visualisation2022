@@ -16,17 +16,18 @@
             margin: 1px solid;
         }
 
-        div.tooltip {	
-            position: absolute;			
-            text-align: center;			
-            width: 60px;					
-            height: 28px;					
-            padding: 2px;				
-            font: 12px sans-serif;		
-            background: lightsteelblue;	
-            border: 0px;		
-            border-radius: 8px;			
-            pointer-events: none;			
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 55px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: #f2b8ec;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            display: inline-block;
         }
 
     </style>
@@ -37,21 +38,9 @@
 
     <script>
       
-        // WINDOW SIZE AND MARGINS
-
-        //const width = window.innerWidth;
-        //const height = window.innerHeight;
-
         const margin = {top: 20, right: 10, bottom: 20, left: 10};
         const width = innerWidth - margin.left - margin.right,
               height = window.innerHeight - margin.top - margin.bottom;
-
-       /*  const g = d3.select("body").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")"); */
-
 
         // LINKING THE CSV FILE TO THE DOCUMENT
         d3.csv('RTJ4.csv', function(d) {
@@ -90,6 +79,7 @@
                 action : +d.mentionWork + +d.mentionCrime,
                 substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
                 trackNumber : +d.trackNumber,
+                
 
             }
             // Possible place to add categories together to do an overall heatmap (for both speakers)?
@@ -102,27 +92,9 @@
                 .attr("height", height + margin.top + margin.bottom)
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-          // .data(data.filter(function(d){ 
-          //  return d.speaker == "killerMike" }))
-
-
-
           // LABELS FOR THE X AND Y AXES
           let myGroups = ["Song 1", "Song 2", "Song 3", "Song 4", "Song 5", "Song 6", "Song 7", "Song 8", "Song 9", "Song 10", "Song 11"]
           let myVars = ["Killer Mike", "El-P", "family", "boasting", "disillusion", "threatening", "anguish", "existentialism", "anti-capitalism", "anti-police", "authority", "slavery", "racism", "elections", "revolution", "anti-religion", "poverty", "education", "wealth", "car", "money", "weapon", "social-media ", "work", "crime", "substances"]
-
-          // Build X scales and axis:
-          /* let x = d3.scalePoint()
-            .range([ 115, 890 ])
-            .domain(myVars)
-          canvas1.append("g")
-            .attr("transform", 'translate(0, 390)')
-            .call(d3.axisBottom(x))
-            .selectAll("text")
-              .attr("transform", "translate(-10,10)rotate(-45)")
-              .style("text-anchor", "end")
-              .style("font-size", 20)
-              .style("fill", "#e81ce8") */
 
             // X AXIS AND SCALE
             let xScale = d3.scaleLinear()
@@ -143,7 +115,6 @@
               .style("fill", "#e81ce8")
               //.attr("transform",`translate(${0},${height - 20})`);
 
-
             // Y AXIS AND SCALE
             let yScale = d3.scaleLinear()
                .domain([1, 11])
@@ -160,53 +131,15 @@
               .style("font-size", 10)
               .style("fill", "#e81ce8")
 
-          // Build Y scales and axis:/* 
-         /*  let y = d3.scalePoint()
-            .range([ height, 0 ])
-            .domain(data.map(d => d.trackNumber))            
-            .padding(0.01);
-          canvas1.append("g")
-            .call(d3.axisLeft(y));  */
-
           // COLOUR SCALE FOR THE SQUARES
           let myColour = d3.scaleLinear()
             .range(["#f2b8ec", "#cc006d"])
             .domain([0, 15])
 
-          // // CREATING A HIGHLIGHTER/ TOOLTIP TO HOVER OVER EACH SQUARE VERSION 1
-          // let tooltip = d3.select("canvas1")
-          //   .append("div")
-          //   .style("opacity", 0)
-          //   .attr("class", "tooltip")
-          //   .style("background-color", "white")
-          //   .style("border", "solid")
-          //   .style("border-width", "2px")
-          //   .style("border-radius", "5px")
-          //   .style("padding", "5px")
-
-          // // THREE FUNCTIONS TO SHOW THE READER INFO WHEN HOVERING OVER A SQUARE
-          // let mouseover = function(d) {
-          //   tooltip.style("opacity", 1)
-          // }
-          // let mousemove = function(d) {
-          //   tooltip
-          //     .html("The exact value of<br>this cell is: " + d.value)
-          //     .style("left", (d3.pointer(this)[0]+70) + "px")
-          //     .style("top", (d3.pointer(this)[1]) + "px")
-          // }
-          // let mouseleave = function(d) {
-          //   tooltip.style("opacity", 0)
-          // }
-
-          
-
-
-        // TOOLTIP ATTEMPT NUMBER 2
-        let div = d3.select("body").append("div")	
-          .attr("class", "tooltip")				
-          .style("opacity", 0);
-
-
+          // Making a tooltip
+          var div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
         
           // ADDING THE SQUARES
           for(let i=0 ; i< 25 ; i++){
@@ -574,24 +507,24 @@
             })
 
               
-                // TOOLTIP INTERACTION OPTION 1
-                //.on("mouseover", mouseover)
-                //.on("mousemove", mousemove)
-                //.on("mouseleave", mouseleave)
-                // TOOLTIP INTERACTION OPTION 2
-        //         .on("mouseover", function(d) {		
-        //     div.transition()		
-        //         .duration(200)		
-        //         .style("opacity", .9);		
-        //     div	.html("the value of this cell is:" + "<br/>"  + +d.killerMike)	
-        //         .style("left", (d3.event.pageX) + "px")		
-        //         .style("top", (d3.event.pageY - 28) + "px");	
-        //     })					
-        // .on("mouseout", function(d) {		
-        //     div.transition()		
-        //         .duration(500)		
-        //         .style("opacity", 0);	
-        // });
+
+
+            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
+            canvas1.selectAll("rect")
+              .on("mouseover", function(event, d) {
+
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9)
+                div.html(`${d.speaker} has mentioned ${event.target.value} <br/> ${d.value} times`) 
+                    .style("left", (event.pageX) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+                            })
+              .on("mouseout", function(d) {
+                div.transition()
+                    .duration(500)
+                    .style("opacity", 0)
+                });
 
 })
 

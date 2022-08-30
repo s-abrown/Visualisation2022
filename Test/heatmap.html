@@ -206,12 +206,13 @@
           .attr("class", "tooltip")				
           .style("opacity", 0);
 
+
+        
           // ADDING THE SQUARES
-        function feedingData(therightdata){
           for(let i=0 ; i< 25 ; i++){
             canvas1.selectAll()
               .data(data.filter(function(d){
-                return d.speaker == therightdata }))
+                return d.speaker == "el-p" }))
               .enter()
               .append("rect")
                 .attr("x", 100 + (i * 32))
@@ -324,20 +325,255 @@
                     return myColour(+d.substanceUse)
                   }
                 })
+              }
 
-              feedingData("el-p")
+            document.getElementById('btnElp')
+              .addEventListener('click', function(e){
+              e.preventDefault();
+              canvas1.selectAll("rect").remove()
+              for(let i=0 ; i< 25 ; i++){
+                canvas1.selectAll()
+                  .data(data.filter(function(d){
+                    return d.speaker == "el-p" }))
+                  .enter()
+                  .append("rect")
+                    .attr("x", 100 + (i * 32))
+                    .attr("y", d => d.trackNumber * (32))
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    .style("fill", d => {
+                      // mention Killer Mike
+                      if(i == 0){
+                        return myColour(+d.killerMike)
+                      }
+                      // mention El-P
+                      else if (i == 1){
+                        return myColour(+d.elP)
+                      }
+                      // mention Family
+                      else if (i == 2){
+                        return myColour(+d.family)
+                      }
+                      // mention boasting
+                      else if (i == 3){
+                        return myColour(+d.boasting)
+                      }
+                      // mention disillusion
+                      else if (i == 4){
+                        return myColour(+d.disillusion)
+                      }
+                      // mention threatening
+                      else if (i == 5){
+                        return myColour(+d.threatening)
+                      }
+                      // mention anguish
+                      else if (i == 6){
+                        return myColour(+d.anguish)
+                      }
+                      // mention existentialism
+                      else if (i == 7){
+                        return myColour(+d.existentialism)
+                      }
+                      // mention anti-capitalism
+                      else if (i == 8){
+                        return myColour(+d.antiCapitalism)
+                      }
+                      // mention anti-police
+                      else if (i == 9){
+                        return myColour(+d.antiPolice)
+                      }
+                      // mention authority
+                      else if (i == 10){
+                        return myColour(+d.authority)
+                      }
+                      // mention slavery
+                      else if (i == 11){
+                        return myColour(+d.slavery)
+                      }
+                      // mention racism
+                      else if (i == 12){
+                        return myColour(+d.racism)
+                      }
+                      // mention elections
+                      else if (i == 13){
+                        return myColour(+d.elections)
+                      }
+                      // mention revolution
+                      else if (i == 14){
+                        return myColour(+d.revolution)
+                      }
+                      // mention anti-religion
+                      else if (i == 15){
+                        return myColour(+d.antiReligion)
+                      }
+                      // mention poverty
+                      else if (i == 16){
+                        return myColour(+d.poverty)
+                      }
+                      // mention education
+                      else if (i == 17){
+                        return myColour(+d.education)
+                      }
+                      // mention wealth
+                      else if (i == 18){
+                        return myColour(+d.wealth)
+                      }
+                      // mention car
+                      else if (i == 19){
+                        return myColour(+d.car)
+                      }
+                      // mention money
+                      else if (i == 20){
+                        return myColour(+d.money)
+                      }
+                      // mention weapon
+                      else if (i == 21){
+                        return myColour(+d.weapon)
+                      }
+                      // mention social-media 
+                      else if (i == 22){
+                        return myColour(+d.socialMedia)
+                      }
+                      // mention work
+                      else if (i == 23){
+                        return myColour(+d.work)
+                      }
+                      // mention crime
+                      else if (i == 24){
+                        return myColour(+d.crime)
+                      }
+                      // mention substances
+                      else if (i == 25){
+                        return myColour(+d.substanceUse)
+                      }
+                    })
+                  }
+            })
 
-              document.getElementById('btnElp')
-                .addEventListener('click', function(e){
-                  e.preventDefault();
-                  therightdata("el-p")
-              })
+            document.getElementById('btnKM')
+              .addEventListener('click', function(e){
+                e.preventDefault();
+              canvas1.selectAll("rect").remove()
+              for(let i=0 ; i< 25 ; i++){
+                canvas1.selectAll()
+                  .data(data.filter(function(d){
+                    return d.speaker == "killerMike" }))
+                  .enter()
+                  .append("rect")
+                    .attr("x", 100 + (i * 32))
+                    .attr("y", d => d.trackNumber * (32))
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    .style("fill", d => {
+                      // mention Killer Mike
+                      if(i == 0){
+                        return myColour(+d.killerMike)
+                      }
+                      // mention El-P
+                      else if (i == 1){
+                        return myColour(+d.elP)
+                      }
+                      // mention Family
+                      else if (i == 2){
+                        return myColour(+d.family)
+                      }
+                      // mention boasting
+                      else if (i == 3){
+                        return myColour(+d.boasting)
+                      }
+                      // mention disillusion
+                      else if (i == 4){
+                        return myColour(+d.disillusion)
+                      }
+                      // mention threatening
+                      else if (i == 5){
+                        return myColour(+d.threatening)
+                      }
+                      // mention anguish
+                      else if (i == 6){
+                        return myColour(+d.anguish)
+                      }
+                      // mention existentialism
+                      else if (i == 7){
+                        return myColour(+d.existentialism)
+                      }
+                      // mention anti-capitalism
+                      else if (i == 8){
+                        return myColour(+d.antiCapitalism)
+                      }
+                      // mention anti-police
+                      else if (i == 9){
+                        return myColour(+d.antiPolice)
+                      }
+                      // mention authority
+                      else if (i == 10){
+                        return myColour(+d.authority)
+                      }
+                      // mention slavery
+                      else if (i == 11){
+                        return myColour(+d.slavery)
+                      }
+                      // mention racism
+                      else if (i == 12){
+                        return myColour(+d.racism)
+                      }
+                      // mention elections
+                      else if (i == 13){
+                        return myColour(+d.elections)
+                      }
+                      // mention revolution
+                      else if (i == 14){
+                        return myColour(+d.revolution)
+                      }
+                      // mention anti-religion
+                      else if (i == 15){
+                        return myColour(+d.antiReligion)
+                      }
+                      // mention poverty
+                      else if (i == 16){
+                        return myColour(+d.poverty)
+                      }
+                      // mention education
+                      else if (i == 17){
+                        return myColour(+d.education)
+                      }
+                      // mention wealth
+                      else if (i == 18){
+                        return myColour(+d.wealth)
+                      }
+                      // mention car
+                      else if (i == 19){
+                        return myColour(+d.car)
+                      }
+                      // mention money
+                      else if (i == 20){
+                        return myColour(+d.money)
+                      }
+                      // mention weapon
+                      else if (i == 21){
+                        return myColour(+d.weapon)
+                      }
+                      // mention social-media 
+                      else if (i == 22){
+                        return myColour(+d.socialMedia)
+                      }
+                      // mention work
+                      else if (i == 23){
+                        return myColour(+d.work)
+                      }
+                      // mention crime
+                      else if (i == 24){
+                        return myColour(+d.crime)
+                      }
+                      // mention substances
+                      else if (i == 25){
+                        return myColour(+d.substanceUse)
+                      }
+                    })
+                  }
+            })
 
-              document.getElementById('btnKM')
-                .addEventListener('click', function(e){
-                  e.preventDefault();
-                  therightdata("killerMike")
-              })
+              
                 // TOOLTIP INTERACTION OPTION 1
                 //.on("mouseover", mouseover)
                 //.on("mousemove", mousemove)
@@ -356,10 +592,6 @@
         //         .duration(500)		
         //         .style("opacity", 0);	
         // });
-
-          }
-        }
-
 
 })
 

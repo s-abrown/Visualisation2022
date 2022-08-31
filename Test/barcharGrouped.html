@@ -1,0 +1,175 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grouped bar chart</title>
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+
+        div.tooltip {
+            position: absolute;
+            text-align: center;
+            width: 60px;
+            height: 85px;
+            padding: 2px;
+            font: 12px sans-serif;
+            background: #f2b8ec;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+            display: inline-block;
+        }
+
+        button {
+            border-radius:10px;
+            background-color:#e81ce8;
+            color: white;
+        }
+
+    </style>
+    <button id= "Elbutton">El-p</button>
+    <button id= "KMbutton">Killer Mike</button>
+    
+</head>
+<body>
+    <div id="#my_dataviz"></div>
+
+<!-- Load d3.js -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7" charset="utf-8"></script>
+
+<!-- Create a div where the graph will take place -->
+<script>
+
+
+    d3.csv('RTJ4.csv', function(d) {
+                return {
+                    speaker : d.speaker,
+                    
+                    //Subcategories
+                    killerMike : +d.mentionKillerMike,
+                    elP : +d.mentionElP,
+                    family : +d.mentionFamily,
+                    other : +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+
+                    boasting : +d.mentionBoasting,
+                    disillusion : +d.mentionDisillusion,
+                    threatening : +d.mentionThreatening,
+                    anguish : +d.mentionAnguish,
+                    existentialism : +d.mentionExistentialism,
+
+                    poverty : +d.mentionPoverty,
+                    education : +d.mentionEducation,
+                    wealth : +d.mentionWealth,
+
+                    work : +d.mentionWork,
+                    crime : +d.mentionCrime,
+
+                    antiCapitalism: +d.mentionAntiCapitalism,
+                    antiPolice: +d.mentionAntiPolice, 
+                    authority: +d.mentionAuthority,
+                    slavery: +d.mentionSlavery,
+                    racism: +d.mentionRacism,
+                    elections: +d.mentionElections,
+                    revolution: +d.mentionRevolution,
+                    antiReligion: +d.mentionAntiReligion,
+
+                    money: +d.mentionMoney,
+                    car: +d.mentionCar, 
+                    weapon: +d.mentionWeapon,
+                    socialMedia: +d.mentionSocialMedia,
+
+                    // Categories
+                    person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+                    feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                    place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+                    state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+                    politics: +d.mentionAntiCapitalism + +d.mentionAntiPolice + +d.mentionAuthority + +d.mentionSlavery + +d.mentionRacism + +d.mentionElections + +d.mentionRevolution + +d.mentionAntiReligion,
+                    object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+                    action : +d.mentionWork + +d.mentionCrime,
+                    substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+                    
+                    trackNumber : +d.trackNumber,
+                }
+            }).then(data => {
+                //Check
+                //console.log("My complete data: " , data)
+                //console.log("Checking person", data[1].politics)
+
+                // set the dimensions and margins of the graph
+                const margin = {top: 10, right: 30, bottom: 20, left: 50},
+                    width = 460 - margin.left - margin.right,
+                    height = 400 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+            const svg = d3.select("#my_dataviz")
+            .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform",`translate(${margin.left},${margin.top})`);
+
+        
+        // List of subgroups = header of the csv files = soil condition here
+        const subgroups = [+d.killerMike, +d.elP, +d.family, +d.other, +d.boasting, +d.disillution, +d.threatening, +d.anguish, +d.existentialism, +d.poverty, +d.education, +d.wealth, +d.work, +d.crime, +d.antiCapitalism, +d.antiPolice, +d.authority, +d.slavery, +d.racism, +d.elections, +d.revolution, +d.antiReligion, +d.money, +d.car, +d.weapon, +d.socialMedia]
+        // const subgroups = data.columns.slice(1)
+
+
+        // List of groups = species here = value of the first column called group -> I show them on the X axis
+        const groups = ["person", "feeling", "place", "state", "politics", "object", "action", "substanceUse"]
+
+
+        // Add X axis
+        const x = d3.scaleBand()
+            .domain(groups)
+            .range([0, width])
+            .padding([0.2])
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x).tickSize(0));
+
+        // Add Y axis
+        const y = d3.scaleLinear()
+            .domain([0, 160])
+            .range([ height, 0 ]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Another scale for subgroup position?
+        const xSubgroup = d3.scaleBand()
+            .domain(subgroups)
+            .range([0, x.bandwidth()])
+            .padding([0.05])
+
+        // color palette = one color per subgroup
+        const color = d3.scaleOrdinal()
+            .domain(subgroups)
+            .range(['#e41a1c','#377eb8','#4daf4a'])
+
+        // Show the bars
+        svg.append("g")
+            .selectAll("g")
+            // Enter in data = loop group per group
+            .data(data)
+            .join("g")
+            .attr("transform", d => `translate(${x(d.group)}, 0)`)
+            .selectAll("rect")
+            .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+            .join("rect")
+            .attr("x", d => xSubgroup(d.key))
+            .attr("y", d => y(d.value))
+            .attr("width", xSubgroup.bandwidth())
+            .attr("height", d => height - y(d.value))
+            .attr("fill", d => color(d.key));
+                
+            })
+        
+
+
+
+</script>
+</body>
+</html>

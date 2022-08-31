@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTJ4</title>
+
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <script>
+        // window size
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const margin = {top: 30, right: 30, bottom: 70, left: 60},
+            w = 460 - margin.left - margin.right,
+            h = 400 - margin.top - margin.bottom;
+
+        // Link csv file to document
+        d3.csv('RTJ4.csv', function(d) {
+            return {
+                speaker : d.speaker,
+                    
+                    //Subcategories
+                    killerMike : +d.mentionKillerMike,
+                    elP : +d.mentionElP,
+                    family : +d.mentionFamily,
+                    other : +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+
+                    boasting : +d.mentionBoasting,
+                    disillusion : +d.mentionDisillusion,
+                    threatening : +d.mentionThreatening,
+                    anguish : +d.mentionAnguish,
+                    existentialism : +d.mentionExistentialism,
+
+                    poverty : +d.mentionPoverty,
+                    education : +d.mentionEducation,
+                    wealth : +d.mentionWealth,
+
+                    work : +d.mentionWork,
+                    crime : +d.mentionCrime,
+
+                    elections : +d.mentionElections,
+                    slavery : +d.mentionSlavery,
+                    racism : +d.mentionRacism,
+                    revolution : +d.mentionRevolution,
+                    antiReligion : +d.mentionAntiReligion,
+                    authority : +d.mentionAuthority,
+                    antiCapitalism : +d.mentionAntiCapitalism,
+                    antiPolice : +d.mentionAntiPolice,
+
+                    money : +d.mentionMoney,
+                    car : +d.mentionCar, 
+                    weapon : +d.mentionWeapon,
+                    socialMedia : +d.mentionSocialMedia,
+
+                    // Categories
+                    person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.other,
+                    feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                    place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+                    state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+                    politics: +d.elections + +d.slavery + +d.racism + +d.revolution + +d.antiReligion + +d.authority + +d.antiCapitalism + +d.antiPolice,
+                    object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+                    action : +d.mentionWork + +d.mentionCrime,
+                    substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+                    
+                    trackNumber : +d.trackNumber,
+            }
+        }).then(data => {
+            // Check
+            console.log(" Complete data set organised by CATEGORY (≠ subcategory): ", data)
+            console.log("TRACK NUMBER : ", data[0].trackNumber)
+
+            
+    
+
+
+
+        })
+
+    </script>
+    
+</body>
+</html>

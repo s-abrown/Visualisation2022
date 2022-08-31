@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<!-- Add 2 buttons -->
+<button onclick="update(data1)">Data 1</button>
+<button onclick="update(data2)">Data 2</button>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_pie"></div>
+
+<script>
+
+d3.csv('RTJ4.csv', function (d) {
+            return {
+                speaker : d.speaker,
+                boasting : +d.mentionBoasting,
+                killerMike : +d.mentionKillerMike,
+                elP : +d.mentionElP,
+                family : +d.mentionFamily,
+                disillusion : +d.mentionDisillusion,
+                threatening : +d.mentionThreatening,
+                anguish : +d.mentionAnguish,
+                existentialism : +d.mentionExistentialism,
+                poverty : +d.mentionPoverty,
+                education : +d.mentionEducation,
+                wealth : +d.mentionWealth,
+                work : +d.mentionWork,
+                crime : +d.mentionCrime,
+                elections : +d.mentionElections,
+                slavery : +d.mentionSlavery,
+                racism : +d.mentionRacism,
+                revolution : +d.mentionRevolution,
+                antiReligion : +d.mentionAntiReligion,
+                authority : +d.mentionAuthority,
+                antiCapitalism : +d.mentionAntiCapitalism,
+                antiPolice : +d.mentionAntiPolice,
+                money : +d.mentionMoney,
+                car : +d.mentionCar, 
+                weapon : +d.mentionWeapon,
+                socialMedia : +d.mentionSocialMedia,
+                person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+                feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+                place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+                state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+                object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+                action : +d.mentionWork + +d.mentionCrime,
+                substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+                trackNumber : +d.trackNumber,
+
+            }
+        }).then(data => {
+
+            // set the dimensions and margins of the graph
+            const piewidth = 450,
+                pieheight = 450,
+                piemargin = 40;
+            
+            // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+            const radius = Math.min(piewidth, pieheight) / 2 - piemargin;
+            
+            // append the svg object to the div called 'my_dataviz'
+            const svg = d3.select("#my_pie")
+            .append("svg")
+                .attr("width", piewidth)
+                .attr("height", pieheight)
+            .append("g")
+                .attr("transform", `translate(${piewidth/2}, ${pieheight/2})`);
+            
+            
+            let boastingAlbumEl = 0
+            let Elmentionpp = 0
+            let Elfeelings = 0
+            let Elplaces = 0
+            let Elsubstances = 0
+            let Elstate = 0
+            let Elobjs = 0
+            let Elcrime = 0
+            let Elwork = 0
+            let boastingAlbumKM = 0
+            let KMmentionpp = 0
+            let KMfeelings = 0
+            let KMplaces = 0
+            let KMsubstances = 0
+            let KMstate = 0
+            let KMobjs = 0
+            let KMcrime = 0
+            let KMwork = 0
+            let boastingAlbumPW = 0
+            let boastingAlbumZDR = 0
+            for (let i = 0; i < data.length; i++){
+                if (data[i].speaker == 'el-p'){
+                boastingAlbumEl += data[i].boasting
+                Elmentionpp += data[i].person
+                Elfeelings += data[i].feeling
+                Elplaces += data[i].place
+                Elsubstances += data[i].substanceUse
+                Elstate += data[i].state
+                Elobjs += data[i].object
+                Elcrime += data[i].crime
+                Elwork += data[i].work
+                }
+                if (data[i].speaker == 'killerMike'){
+                boastingAlbumKM += data[i].boasting
+                KMmentionpp += data[i].person
+                KMfeelings += data[i].feeling
+                KMplaces += data[i].place
+                KMsubstances += data[i].substanceUse
+                KMstate += data[i].state
+                KMobjs += data[i].object
+                KMcrime += data[i].crime
+                KMwork += data[i].work
+                }
+            }
+            // create 2 data_set
+            const El = {feelings:Elfeelings, boasting:boastingAlbumEl, people:Elmentionpp, substanceUse:Elsubstances}
+            const data2 = {feelings:KMfeelings, boasting:boastingAlbumKM, people:KMmentionpp, substanceUse:KMsubstances}
+            
+            // set the color scale
+            const color = d3.scaleOrdinal()
+            .domain(["feelings", "boasting", "family", "whatevs"])
+            .range(d3.schemeDark2);
+
+                // A function that create / update the plot for a given variable:
+            function update(data) {
+
+            // Compute the position of each group on the pie:
+            const pie = d3.pie()
+            .value(function(d) {return d[1]; })
+            .sort(function(a, b) { return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+            const data_ready = pie(Object.entries(data))
+
+            // map to data
+            const u = svg.selectAll("path")
+            .data(data_ready)
+
+            // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+            u
+            .join('path')
+            .transition()
+            .duration(1000)
+            .attr('d', d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius)
+            )
+            .attr('fill', function(d){ return(color(d.data[0])) })
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+
+
+            }
+            // Initialize the plot with the first dataset
+            update(El)
+    })
+</script>

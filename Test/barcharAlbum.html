@@ -36,6 +36,28 @@
     <button id= "Elbutton">El-p</button>
     <button id= "KMbutton">Killer Mike</button>
 
+    <div id="my_pie"></div>
+    <div id="resultElp"></div>
+    </br>
+    <div id="resultKM"></div>
+
+    <!-- Create a div where the graph will take place -->
+    <div class="pieOptions">
+        <div> Choose parameters: </div>
+        </br>
+        <div id="feelings">Feelings</div>
+        <div id="boasting">Boasting</div>
+        <div id="substanceUse">Substance use</div>
+        <div id="people">People</div>
+        <div id="place">Place</div>
+        <div id="state">State</div>
+        <div id="object">Object</div>
+        <div id="action">Action</div>
+    </div>
+
+    <button id="btnElp">El-p</button>
+    <button id="btnKM">Killer Mike</button>
+
 
 <!-- Load d3.js -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -73,6 +95,7 @@
                 car : +d.mentionCar, 
                 weapon : +d.mentionWeapon,
                 socialMedia : +d.mentionSocialMedia,
+                
                 person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
                 feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
                 place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
@@ -80,6 +103,7 @@
                 object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
                 action : +d.mentionWork + +d.mentionCrime,
                 substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+
                 trackNumber : +d.trackNumber,
             }
         }).then(data => {
@@ -92,15 +116,16 @@
                 h = 500 - margin.top - margin.bottom;
 
             // Creating the canvas
-            const svg = d3.select("body")
+            const canvas1 = d3.select("body")
                 .append("svg")
                     .attr("width", w + margin.left + margin.right)
                     .attr("height", h + margin.top + margin.bottom)
                 .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
+            console.log(data[1].person)
+            console.log(data.length)
             
             // Looping through the dataset to obtain what we need for the graph:
-            let boastingAlbumEl = 0
             let Elmentionpp = 0
             let Elfeelings = 0
             let Elplaces = 0
@@ -109,7 +134,9 @@
             let Elobjs = 0
             let Elcrime = 0
             let Elwork = 0
-            let boastingAlbumKM = 0
+            let Elpolitics = 0
+            let boastingAlbumEl = 0
+
             let KMmentionpp = 0
             let KMfeelings = 0
             let KMplaces = 0
@@ -118,37 +145,38 @@
             let KMobjs = 0
             let KMcrime = 0
             let KMwork = 0
-            let boastingAlbumPW = 0
-            let boastingAlbumZDR = 0
+            let KMpolitics = 0
+            let boastingAlbumKM = 0
             for (let i = 0; i < data.length; i++){
                 if (data[i].speaker == 'el-p'){
-                boastingAlbumEl += data[i].boasting
-                Elmentionpp += data[i].person
-                Elfeelings += data[i].feeling
-                Elplaces += data[i].place
-                Elsubstances += data[i].substanceUse
-                Elstate += data[i].state
-                Elobjs += data[i].object
-                Elcrime += data[i].crime
-                Elwork += data[i].work
+                    Elmentionpp += data[i].person
+                    Elfeelings += data[i].feeling
+                    Elplaces += data[i].place
+                    Elsubstances += data[i].substanceUse
+                    Elstate += data[i].state
+                    Elobjs += data[i].object
+                    Elcrime += data[i].crime
+                    Elwork += data[i].work
+                    Elpolitics += data[i].politics
+                    boastingAlbumEl += data[i].boasting
                 }
                 if (data[i].speaker == 'killerMike'){
-                boastingAlbumKM += data[i].boasting
-                KMmentionpp += data[i].person
-                KMfeelings += data[i].feeling
-                KMplaces += data[i].place
-                KMsubstances += data[i].substanceUse
-                KMstate += data[i].state
-                KMobjs += data[i].object
-                KMcrime += data[i].crime
-                KMwork += data[i].work
+                    KMmentionpp += data[i].person
+                    KMfeelings += data[i].feeling
+                    KMplaces += data[i].place
+                    KMsubstances += data[i].substanceUse
+                    KMstate += data[i].state
+                    KMobjs += data[i].object
+                    KMcrime += data[i].crime
+                    KMwork += data[i].work
+                    KMpolitics += data[i].politics
+                    boastingAlbumKM += data[i].boasting
                 }
             }
 
             // Datasets for the graph
             // For El-P
             const El = [
-                {group: "boasting", value: boastingAlbumEl},
                 {group: "people", value: Elmentionpp},
                 {group: "feelings", value: Elfeelings},
                 {group: "places", value: Elplaces},
@@ -156,12 +184,13 @@
                 {group: "state of being", value: Elstate},
                 {group: "objects", value: Elobjs},
                 {group: "crime", value: Elcrime},
-                {group: "work", value: Elwork}
+                {group: "work", value: Elwork},
+                {group: "politics", value: Elpolitics}
             ]
+            console.log(El)
             
             // For KM
             const KM = [
-                {group: "boasting", value: boastingAlbumKM}, 
                 {group: "people", value: KMmentionpp},
                 {group: "feelings", value: KMfeelings},
                 {group: "places", value: KMplaces},
@@ -169,9 +198,10 @@
                 {group: "state of being", value: KMstate},
                 {group: "objects", value: KMobjs},
                 {group: "crime", value: KMcrime},
-                {group: "work", value: KMwork}
+                {group: "work", value: KMwork},
+                {group: "politics", value: Elpolitics}
             ]
-
+            console.log(KM)
             // Checking data:
             // console.log(El)
             // console.log(KM)
@@ -182,7 +212,7 @@
                 .range([0, w])
                 .domain(El.map(d => d.group))
                 .padding(0.2);
-            svg.append("g")
+            canvas1.append("g")
                 .attr("transform", `translate(0,${h})`)
                 .call(d3.axisBottom(x))
                 .selectAll("text")
@@ -195,7 +225,7 @@
             const y = d3.scaleLinear()
                 .domain([0, 160])
                 .range([ h, 0]);
-            svg.append("g")
+            canvas1.append("g")
                 .attr("class", "myYaxis")
                 .call(d3.axisLeft(y));
             
@@ -220,7 +250,7 @@
 
             // Creating the rectangles for the bar chart
             function updateData(data){
-                let update = svg.selectAll('rect')
+                let updateBar = canvas1.selectAll('rect')
                     .data(data)
                     .join('rect')
                     .transition()
@@ -255,7 +285,7 @@
             })
 
             // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
-            svg.selectAll("rect")
+            canvas1.selectAll("rect")
             .on("mouseover", function(event,d) {
                             div.transition()
                                 .duration(200)
@@ -270,8 +300,639 @@
                                 .duration(500)
                                 .style("opacity", 0)
                             });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//PIE CHART  
+            
+            const canvas2 = d3.select("body")
+                .append("svg")
+                    .attr("width", w + margin.left + margin.right)
+                    .attr("height", h + margin.top + margin.bottom)
+                .append("g")
 
-        })
+            // set the dimensions and margins of the graph
+            const piewidth = 450, pieheight = 450, piemargin = 40;
+            const radius = Math.min(piewidth, pieheight) / 2 - piemargin;
+
+            let valueEl = boastingAlbumEl
+            let valueKM = boastingAlbumKM
+
+            let dataset = {El:valueEl, KM:valueKM}
+            let topic = "boasting"
+
+            document.getElementById('people')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    valueEl = Elmentionpp
+                    valueKM = KMmentionpp
+                    dataset = {El:valueEl, KM:valueKM}
+                    console.log(dataset)
+                    topic = "people"
+                    update(dataset)
+                })
+
+            document.getElementById('feelings')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elfeelings
+                valueKM = KMfeelings
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "feelings"
+                update(dataset)
+            })
+
+            document.getElementById('boasting')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = boastingAlbumEl
+                valueKM = boastingAlbumKM
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "boasting"
+                update(dataset)
+            })
+
+            document.getElementById('substanceUse')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elsubstances
+                valueKM = KMsubstances
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "substance use"
+                update(dataset)
+            })
+
+            document.getElementById('place')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elplaces
+                valueKM = KMplaces
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "places"
+                update(dataset)
+            })
+
+            document.getElementById('state')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elstate
+                valueKM = KMstate
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "states of being"
+                update(dataset)
+            })
+
+            document.getElementById('object')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elobjs
+                valueKM = KMobjs
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "objects"
+                update(dataset)
+            })
+
+            document.getElementById('action')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elcrime + Elwork
+                valueKM = KMcrime + KMwork
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "actions"
+                update(dataset)
+            })
+            console.log(dataset.El)
+
+            // A function that create / update the plot for a given variable:
+            function update(data) {
+
+            // Compute the position of each group on the pie:
+            const pie = d3.pie()
+            .value(function(d) {return d[1]; })
+            .sort(function(a, b) { return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+            const data_ready = pie(Object.entries(data))
+
+            // map to data
+            const u = canvas2.selectAll("path")
+            .data(data_ready)
+
+            // Building the pie chart: 
+            u
+            .join('path')
+            // The transition does not always work proprely. We tried to look for solutions online but nothing worked for our project. We undesrtand it is a problem of d3 calculating the position of the arc while transitioning, and that using attrTween would help. As of right now we can't get it to work.
+            .transition()
+            .duration(1000)
+            .attr('d', d3.arc()
+                .innerRadius(0)
+                .outerRadius(radius)
+            )
+            .attr('fill', function(d){
+                if(d.data[0] == "El"){
+                    return "hotpink"
+                }
+                else if (d.data[0] == "KM"){
+                    return "purple"
+                }
+             })
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 1)
+
+            let ElDiv = document.getElementById("resultElp")
+            ElDiv.innerHTML = `El-p has mentioned ${topic} ${dataset.El} time(s)`
+            let KMDiv = document.getElementById("resultKM")
+            KMDiv.innerHTML = `Killer Mike has mentioned ${topic} ${dataset.KM} time(s)`
+        }
+
+
+            // Initialize the plot with the first dataset
+            update(dataset)
+
+        
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Heatmap 
+    let canvas3 = d3.select('body')
+                .append('svg')
+                //.attr('width', width - 40)
+                .attr("width", width + margin.left + margin.right)
+                //.attr('height', height - 40)
+                .attr("height", height + margin.top + margin.bottom)
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+          // LABELS FOR THE X AND Y AXES
+          let myGroups = ["1. Yankee and the Brave (Ep. 4)", "2. Ooh La La", "3. Out of Sight", "4. Holy Calamafuck", "5. Goonies vs. E.T.", "6. Walking in the Snow", "7. Ju$t", "8. Never Look Back", "9. The Ground Below", "10. Pulling the Pin", "11. A Few Words for the Firing Squad (Radiation)"]
+          let myVars = ["Killer Mike", "El-P", "family", "boasting", "disillusion", "threatening", "anguish", "existentialism", "anti-capitalism", "anti-police", "authority", "slavery", "racism", "elections", "revolution", "anti-religion", "poverty", "education", "wealth", "car", "money", "weapon", "social-media ", "work", "crime", "substances"]
+
+            // X AXIS AND SCALE
+            let xScale = d3.scaleLinear()
+               .domain([1, 25])
+               .range([115, 884])
+            
+            let xAxisGenerator = d3.axisBottom(xScale);
+            xAxisGenerator.ticks(25)
+            xAxisGenerator.tickFormat((d,i) => myVars[i]);
+
+            let xAxis = canvas3.append("g")
+            .call(xAxisGenerator)
+            .attr("transform", 'translate(0, 390)')
+            .selectAll("text")
+              .attr("transform", "translate(-10,2)rotate(-45)")
+              .style("text-anchor", "end")
+              .style("font-size", 15)
+              .style("fill", "#6f00de")
+
+            // Y AXIS AND SCALE
+            let yScale = d3.scaleLinear()
+               .domain([1, 11])
+               .range([50, 370])
+            
+            let yAxisGenerator = d3.axisLeft(yScale);
+            yAxisGenerator.ticks(11)
+            yAxisGenerator.tickFormat((d,i) => myGroups[i]);
+
+            let yAxis = canvas3.append("g")
+            .call(yAxisGenerator)
+            .attr("transform", 'translate(90, 0)')
+            .selectAll("text")
+              .style("font-size", 15)
+              .style("fill", "#6f00de")
+
+          // COLOUR SCALE FOR THE SQUARES
+          let myColour = d3.scaleLinear()
+            .range(["#ffdef3", "#6f00de"])
+            .domain([0, 24])
+
+          // Making a tooltip (refer to the html for more info on the styling)
+          let myDiv = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+        
+          // ADDING THE SQUARES
+          for(let i=0 ; i< 25 ; i++){
+            canvas3.selectAll()
+              .data(data.filter(function(d){
+                return d.speaker == "el-p" }))
+              .enter()
+              .append("rect")
+                .attr("x", 100 + (i * 32))
+                .attr("y", d => d.trackNumber * (32))
+                .attr("width", 30)
+                .attr("height", 30)
+                .style("fill", d => {
+                  // mention Killer Mike
+                  if(i == 0){
+                     return myColour(+d.killerMike)
+                  }
+                  // mention El-P
+                  else if (i == 1){
+                    return myColour(+d.elP)
+                  }
+                  // mention Family
+                  else if (i == 2){
+                    return myColour(+d.family)
+                  }
+                  // mention boasting
+                  else if (i == 3){
+                    return myColour(+d.boasting)
+                  }
+                  // mention disillusion
+                  else if (i == 4){
+                    return myColour(+d.disillusion)
+                  }
+                  // mention threatening
+                  else if (i == 5){
+                    return myColour(+d.threatening)
+                  }
+                  // mention anguish
+                  else if (i == 6){
+                    return myColour(+d.anguish)
+                  }
+                  // mention existentialism
+                  else if (i == 7){
+                    return myColour(+d.existentialism)
+                  }
+                  // mention anti-capitalism
+                  else if (i == 8){
+                    return myColour(+d.antiCapitalism)
+                  }
+                  // mention anti-police
+                  else if (i == 9){
+                    return myColour(+d.antiPolice)
+                  }
+                  // mention authority
+                  else if (i == 10){
+                    return myColour(+d.authority)
+                  }
+                  // mention slavery
+                  else if (i == 11){
+                    return myColour(+d.slavery)
+                  }
+                  // mention racism
+                  else if (i == 12){
+                    return myColour(+d.racism)
+                  }
+                  // mention elections
+                  else if (i == 13){
+                    return myColour(+d.elections)
+                  }
+                  // mention revolution
+                  else if (i == 14){
+                    return myColour(+d.revolution)
+                  }
+                  // mention anti-religion
+                  else if (i == 15){
+                    return myColour(+d.antiReligion)
+                  }
+                  // mention poverty
+                  else if (i == 16){
+                    return myColour(+d.poverty)
+                  }
+                  // mention education
+                  else if (i == 17){
+                    return myColour(+d.education)
+                  }
+                  // mention wealth
+                  else if (i == 18){
+                    return myColour(+d.wealth)
+                  }
+                  // mention car
+                  else if (i == 19){
+                    return myColour(+d.car)
+                  }
+                  // mention money
+                  else if (i == 20){
+                    return myColour(+d.money)
+                  }
+                  // mention weapon
+                  else if (i == 21){
+                    return myColour(+d.weapon)
+                  }
+                  // mention social-media 
+                  else if (i == 22){
+                    return myColour(+d.socialMedia)
+                  }
+                  // mention work
+                  else if (i == 23){
+                    return myColour(+d.work)
+                  }
+                  // mention crime
+                  else if (i == 24){
+                    return myColour(+d.crime)
+                  }
+                  // mention substances
+                  else if (i == 25){
+                    return myColour(+d.substanceUse)
+                  }
+                })
+                // Making the tooltip available after clicking the buttons
+                tooltip()
+              }
+
+            document.getElementById('btnElp')
+              .addEventListener('click', function(e){
+              e.preventDefault();
+              canvas3.selectAll("rect").remove()
+              for(let i=0 ; i< 25 ; i++){
+                canvas3.selectAll()
+                  .data(data.filter(function(d){
+                    return d.speaker == "el-p" }))
+                  .enter()
+                  .append("rect")
+                    .attr("x", 100 + (i * 32))
+                    .attr("y", d => d.trackNumber * (32))
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    .style("fill", d => {
+                      // mention Killer Mike
+                      if(i == 0){
+                        return myColour(+d.killerMike)
+                      }
+                      // mention El-P
+                      else if (i == 1){
+                        return myColour(+d.elP)
+                      }
+                      // mention Family
+                      else if (i == 2){
+                        return myColour(+d.family)
+                      }
+                      // mention boasting
+                      else if (i == 3){
+                        return myColour(+d.boasting)
+                      }
+                      // mention disillusion
+                      else if (i == 4){
+                        return myColour(+d.disillusion)
+                      }
+                      // mention threatening
+                      else if (i == 5){
+                        return myColour(+d.threatening)
+                      }
+                      // mention anguish
+                      else if (i == 6){
+                        return myColour(+d.anguish)
+                      }
+                      // mention existentialism
+                      else if (i == 7){
+                        return myColour(+d.existentialism)
+                      }
+                      // mention anti-capitalism
+                      else if (i == 8){
+                        return myColour(+d.antiCapitalism)
+                      }
+                      // mention anti-police
+                      else if (i == 9){
+                        return myColour(+d.antiPolice)
+                      }
+                      // mention authority
+                      else if (i == 10){
+                        return myColour(+d.authority)
+                      }
+                      // mention slavery
+                      else if (i == 11){
+                        return myColour(+d.slavery)
+                      }
+                      // mention racism
+                      else if (i == 12){
+                        return myColour(+d.racism)
+                      }
+                      // mention elections
+                      else if (i == 13){
+                        return myColour(+d.elections)
+                      }
+                      // mention revolution
+                      else if (i == 14){
+                        return myColour(+d.revolution)
+                      }
+                      // mention anti-religion
+                      else if (i == 15){
+                        return myColour(+d.antiReligion)
+                      }
+                      // mention poverty
+                      else if (i == 16){
+                        return myColour(+d.poverty)
+                      }
+                      // mention education
+                      else if (i == 17){
+                        return myColour(+d.education)
+                      }
+                      // mention wealth
+                      else if (i == 18){
+                        return myColour(+d.wealth)
+                      }
+                      // mention car
+                      else if (i == 19){
+                        return myColour(+d.car)
+                      }
+                      // mention money
+                      else if (i == 20){
+                        return myColour(+d.money)
+                      }
+                      // mention weapon
+                      else if (i == 21){
+                        return myColour(+d.weapon)
+                      }
+                      // mention social-media 
+                      else if (i == 22){
+                        return myColour(+d.socialMedia)
+                      }
+                      // mention work
+                      else if (i == 23){
+                        return myColour(+d.work)
+                      }
+                      // mention crime
+                      else if (i == 24){
+                        return myColour(+d.crime)
+                      }
+                      // mention substances
+                      else if (i == 25){
+                        return myColour(+d.substanceUse)
+                      }
+                    })
+                  }
+                  // Making the tooltip available after clicking the buttons
+                  tooltip()
+            })
+
+            document.getElementById('btnKM')
+              .addEventListener('click', function(e){
+                e.preventDefault();
+              canvas3.selectAll("rect").remove()
+              for(let i=0 ; i< 25 ; i++){
+                canvas3.selectAll()
+                  .data(data.filter(function(d){
+                    return d.speaker == "killerMike" }))
+                  .enter()
+                  .append("rect")
+                    .attr("x", 100 + (i * 32))
+                    .attr("y", d => d.trackNumber * (32))
+                    .attr("width", 30)
+                    .attr("height", 30)
+                    //.transition()
+                    //.ease(d3.easeBounce)
+                    //.duration(5000)
+                    .style("fill", d => {
+                      // mention Killer Mike
+                      if(i == 0){
+                        return myColour(+d.killerMike)
+                      }
+                      // mention El-P
+                      else if (i == 1){
+                        return myColour(+d.elP)
+                      }
+                      // mention Family
+                      else if (i == 2){
+                        return myColour(+d.family)
+                      }
+                      // mention boasting
+                      else if (i == 3){
+                        return myColour(+d.boasting)
+                      }
+                      // mention disillusion
+                      else if (i == 4){
+                        return myColour(+d.disillusion)
+                      }
+                      // mention threatening
+                      else if (i == 5){
+                        return myColour(+d.threatening)
+                      }
+                      // mention anguish
+                      else if (i == 6){
+                        return myColour(+d.anguish)
+                      }
+                      // mention existentialism
+                      else if (i == 7){
+                        return myColour(+d.existentialism)
+                      }
+                      // mention anti-capitalism
+                      else if (i == 8){
+                        return myColour(+d.antiCapitalism)
+                      }
+                      // mention anti-police
+                      else if (i == 9){
+                        return myColour(+d.antiPolice)
+                      }
+                      // mention authority
+                      else if (i == 10){
+                        return myColour(+d.authority)
+                      }
+                      // mention slavery
+                      else if (i == 11){
+                        return myColour(+d.slavery)
+                      }
+                      // mention racism
+                      else if (i == 12){
+                        return myColour(+d.racism)
+                      }
+                      // mention elections
+                      else if (i == 13){
+                        return myColour(+d.elections)
+                      }
+                      // mention revolution
+                      else if (i == 14){
+                        return myColour(+d.revolution)
+                      }
+                      // mention anti-religion
+                      else if (i == 15){
+                        return myColour(+d.antiReligion)
+                      }
+                      // mention poverty
+                      else if (i == 16){
+                        return myColour(+d.poverty)
+                      }
+                      // mention education
+                      else if (i == 17){
+                        return myColour(+d.education)
+                      }
+                      // mention wealth
+                      else if (i == 18){
+                        return myColour(+d.wealth)
+                      }
+                      // mention car
+                      else if (i == 19){
+                        return myColour(+d.car)
+                      }
+                      // mention money
+                      else if (i == 20){
+                        return myColour(+d.money)
+                      }
+                      // mention weapon
+                      else if (i == 21){
+                        return myColour(+d.weapon)
+                      }
+                      // mention social-media 
+                      else if (i == 22){
+                        return myColour(+d.socialMedia)
+                      }
+                      // mention work
+                      else if (i == 23){
+                        return myColour(+d.work)
+                      }
+                      // mention crime
+                      else if (i == 24){
+                        return myColour(+d.crime)
+                      }
+                      // mention substances
+                      else if (i == 25){
+                        return myColour(+d.substanceUse)
+                      }
+                    })
+                  }
+                  // Making the tooltip available after clicking the buttons
+                  tooltip()
+            })
+
+            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar
+            // In a function so that it may be used repeatedly after clicking the buttons
+            function tooltip(){
+              canvas3.selectAll("rect")
+                .on("mouseover", function(event, d) {
+                  // To retrieve the RGBs of each cell in order to determine their value
+                  //console.log(d3.select(event.target).attr('style'))
+                  console.log(event.target)
+                  let value
+                  let table = []
+                  for (let i = 0; i < 25; i++){
+                    table.push(`fill: ${myColour(i)};`)
+                  }
+                  for (let i = 0; i < table.length; i++){
+                    if (d3.select(event.target).attr('style') == table[i]){
+                      value = i
+                    }}
+                  console.log(d3.select(event.target).attr('style'))
+                  console.log(d3.select(event.target).attr('x'))
+                  let table2 = [['Killer Mike', 100], ['El-P', 132], ['family', 164], ['boasting', 196], ['disillusion', 228], ['threatening', 260], ['anguish', 292], ['existentialism', 324], ['anti Capitalism', 356], ['anti police', 388], ['authority', 420], ['slavery', 452], ['racism', 484], ['elections', 516], ['revolution', 548], ['anti religion', 580], ['poverty', 612], ['education', 644], ['wealth', 676], ['car', 708], ['money', 714], ['weapons', 772], ['social media', 804], ['work', 836], ['crime', 868]]
+                  let topic 
+                  for (let i = 0; i < table2.length; i++){
+                    if (d3.select(event.target).attr('x') == table2[i][1]){
+                        topic = table2[i][0]
+                    }
+                  }
+                  let speaker 
+                  if (d.speaker == 'killerMike'){
+                    speaker = 'Killer Mike'
+                  } else if (d.speaker == 'el-p'){
+                    speaker = 'El-P'
+                  }
+                  myDiv.transition()
+                      .duration(200)
+                      .style("opacity", .9)
+                    myDiv.html(`${speaker} has mentioned ${topic} <br/> ${value} time(s) in this song`) 
+                      .style("left", (event.pageX) + "px")
+                      .style("top", (event.pageY - 28) + "px")
+                      //console.log(d.value)
+                              })
+                .on("mouseout", function(d) {
+                myDiv.transition()
+                      .duration(500)
+                      .style("opacity", 0)
+                  });
+              }
+    })
 </script>
 </body>
 </html>

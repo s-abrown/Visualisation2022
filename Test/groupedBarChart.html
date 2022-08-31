@@ -92,69 +92,74 @@
                 }
             }).then(data => {
                 //Check
-                //console.log("My complete data: " , data)
-                //console.log("Checking person", data[1].politics)
+                console.log("My complete data: " , data)
+                console.log("Checking anti-police: ", data[1].politics) // output: 8. On the csv the first instance of anti-police (data[1].politics = 8)
+                console.log("Checking anguish: ", data[7].anguish) // output: 3. Checks out with csv
 
-        // append the svg object to the body of the page
-            const svg = d3.select("#my_dataviz")
-            .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-                .attr("transform",`translate(${margin.left},${margin.top})`);
+                // Appending the svg to the body of the page
+                let svg = d3.select("#my_dataviz")
+                .append('svg')
+                    .attr("width", width + margin.left + margin.right)
+                    .attr("height", height + margin.top + margin.bottom)
+                .append('g')
+                .attr("transform",`translate(${margin.left},${margin.top})`)
 
-        
-        // List of subgroups = header of the csv files = soil condition here
-        const subgroups = [+d.killerMike, +d.elP, +d.family, +d.other, +d.boasting, +d.disillution, +d.threatening, +d.anguish, +d.existentialism, +d.poverty, +d.education, +d.wealth, +d.work, +d.crime, +d.antiCapitalism, +d.antiPolice, +d.authority, +d.slavery, +d.racism, +d.elections, +d.revolution, +d.antiReligion, +d.money, +d.car, +d.weapon, +d.socialMedia]
-        // const subgroups = data.columns.slice(1)
+                // List of subgroups aka headers of the csv file - in this case the ones specified above
+                // There are 50 columns in total on the csv file, but we want to ignore the first 4, as they are not subgroups for the purpose of this graph, hence -46
+                // let subgroups = data.columns.slice(-46)
+                let subgroups = data.columns.slice(47)
+                
+
+                // List of groups, aka the main groups to which the subgroups belong to - in this case the ones specified above
+                let groups = ["person", "feeling", "place", "state", "politics", "object", "action", "substanceUse"]
+
+                // Adding an X axis and adding it to the svg
+                let xAxis = d3.scaleBand()
+                    .domain(groups)
+                    .range([0,width])
+                    .padding([0.2])
+                svg.append('g')
+                .attr("transform", `translate(0, ${height})`)
+                .call(d3.axisBottom(xAxis).tickSize(0))
+
+                // Adding a Y axis and adding it to the svg
+                let yAxis = d3.scaleLinear()
+                    .domain([0, 160])
+                    .range([ height, 0 ]);
+                svg.append("g")
+                    .call(d3.axisLeft(yAxis))
+
+                // Another scale for subgroup posistion... idk if this is of any use
+                let xSubgroup = d3.scaleBand()
+                    .domain(subgroups)
+                    .range([0, xAxis.bandwidth()])
+                    .padding([0.05])
+
+                // Color palette = one color per subgroup aka 46
+                const color = d3.scaleOrdinal()
+                    .domain(subgroups)
+                    .range(['#e41a1c','#377eb8','#4daf4a'])
+
+                // Creating the bars for the chart
+                svg.append("g")
+                    .selectAll("g")
+                    // Enter in data = loop group per group
+                    .data(data)
+                    .join("g")
+                    .attr("transform", d => `translate(${xAxis(d.group)}, 0)`)
+                    .selectAll("rect")
+                    .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
+                    .join("rect")
+                    .attr("x", d => xSubgroup(d.key))
+                    .attr("y", d => yAxis(d.value))
+                    .attr("width", xSubgroup.bandwidth())
+                    .attr("height", d => height - y(d.value))
+                    .attr("fill", d => color(d.key));
 
 
-        // List of groups = species here = value of the first column called group -> I show them on the X axis
-        const groups = ["person", "feeling", "place", "state", "politics", "object", "action", "substanceUse"]
 
 
-        // Add X axis
-        const x = d3.scaleBand()
-            .domain(groups)
-            .range([0, width])
-            .padding([0.2])
-        svg.append("g")
-            .attr("transform", `translate(0, ${height})`)
-            .call(d3.axisBottom(x).tickSize(0));
-
-        // Add Y axis
-        const y = d3.scaleLinear()
-            .domain([0, 160])
-            .range([ height, 0 ]);
-        svg.append("g")
-            .call(d3.axisLeft(y));
-
-        // Another scale for subgroup position?
-        const xSubgroup = d3.scaleBand()
-            .domain(subgroups)
-            .range([0, x.bandwidth()])
-            .padding([0.05])
-
-        // color palette = one color per subgroup
-        const color = d3.scaleOrdinal()
-            .domain(subgroups)
-            .range(['#e41a1c','#377eb8','#4daf4a'])
-
-        // Show the bars
-        svg.append("g")
-            .selectAll("g")
-            // Enter in data = loop group per group
-            .data(data)
-            .join("g")
-            .attr("transform", d => `translate(${x(d.group)}, 0)`)
-            .selectAll("rect")
-            .data(function(d) { return subgroups.map(function(key) { return {key: key, value: d[key]}; }); })
-            .join("rect")
-            .attr("x", d => xSubgroup(d.key))
-            .attr("y", d => y(d.value))
-            .attr("width", xSubgroup.bandwidth())
-            .attr("height", d => height - y(d.value))
-            .attr("fill", d => color(d.key));
+       
                 
             })
         

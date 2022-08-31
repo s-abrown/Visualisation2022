@@ -1,15 +1,49 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 
-<!-- Load d3.js -->
-<script src="https://d3js.org/d3.v6.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIE Chart</title>
+    <style>
+        svg {
+            background-color: whitesmoke;
+            margin: 1px solid;
+        }
+        #feelings {
+            border: solid 2px;
+            background-color: hotpink;
+            display: inline-block;
+        }
 
-<!-- Add 2 buttons -->
-<button onclick="update(data1)">Data 1</button>
-<button onclick="update(data2)">Data 2</button>
+    </style>
+
+
+<body>
+
+<div id="my_pie"></div>
+
+<div id="resultElp"></div>
+</br>
+<div id="resultKM"></div>
 
 <!-- Create a div where the graph will take place -->
-<div id="my_pie"></div>
+<div class="pieOptions">
+    <div> Choose parameters: </div>
+    </br>
+    <div id="feelings">Feelings</div>
+    <div id="boasting">Boasting</div>
+    <div id="substanceUse">Substance use</div>
+    <div id="people">People</div>
+    <div id="place">Place</div>
+    <div id="state">State</div>
+    <div id="object">Object</div>
+    <div id="action">Action</div>
+</div>
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
 
 <script>
 
@@ -41,6 +75,7 @@ d3.csv('RTJ4.csv', function (d) {
                 car : +d.mentionCar, 
                 weapon : +d.mentionWeapon,
                 socialMedia : +d.mentionSocialMedia,
+                
                 person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
                 feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
                 place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
@@ -48,8 +83,8 @@ d3.csv('RTJ4.csv', function (d) {
                 object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
                 action : +d.mentionWork + +d.mentionCrime,
                 substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
-                trackNumber : +d.trackNumber,
 
+                trackNumber : +d.trackNumber,
             }
         }).then(data => {
 
@@ -114,16 +149,103 @@ d3.csv('RTJ4.csv', function (d) {
                 KMwork += data[i].work
                 }
             }
-            // create 2 data_set
-            const El = {feelings:Elfeelings, boasting:boastingAlbumEl, people:Elmentionpp, substanceUse:Elsubstances}
-            const data2 = {feelings:KMfeelings, boasting:boastingAlbumKM, people:KMmentionpp, substanceUse:KMsubstances}
-            
-            // set the color scale
-            const color = d3.scaleOrdinal()
-            .domain(["feelings", "boasting", "family", "whatevs"])
-            .range(d3.schemeDark2);
 
-                // A function that create / update the plot for a given variable:
+            let valueEl = boastingAlbumEl
+            let valueKM = boastingAlbumKM
+
+            let dataset = {El:valueEl, KM:valueKM}
+            let topic = "boasting"
+
+            document.getElementById('people')
+                .addEventListener('click', function(e){
+                    e.preventDefault();
+                    valueEl = Elmentionpp
+                    valueKM = KMmentionpp
+                    dataset = {El:valueEl, KM:valueKM}
+                    console.log(dataset)
+                    topic = "people"
+                    update(dataset)
+                })
+
+            document.getElementById('feelings')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elfeelings
+                valueKM = KMfeelings
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "feelings"
+                update(dataset)
+            })
+
+            document.getElementById('boasting')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = boastingAlbumEl
+                valueKM = boastingAlbumKM
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "boasting"
+                update(dataset)
+            })
+
+            document.getElementById('substanceUse')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elsubstances
+                valueKM = KMsubstances
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "substance use"
+                update(dataset)
+            })
+
+            document.getElementById('place')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elplaces
+                valueKM = KMplaces
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "places"
+                update(dataset)
+            })
+
+            document.getElementById('state')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elstate
+                valueKM = KMstate
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "states of being"
+                update(dataset)
+            })
+
+            document.getElementById('object')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elobjs
+                valueKM = KMobjs
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "objects"
+                update(dataset)
+            })
+
+            document.getElementById('action')
+            .addEventListener('click', function(e){
+                e.preventDefault();
+                valueEl = Elcrime + Elwork
+                valueKM = KMcrime + KMwork
+                dataset = {El:valueEl, KM:valueKM}
+                console.log(dataset)
+                topic = "actions"
+                update(dataset)
+            })
+            console.log(dataset.El)
+
+            // A function that create / update the plot for a given variable:
             function update(data) {
 
             // Compute the position of each group on the pie:
@@ -136,23 +258,41 @@ d3.csv('RTJ4.csv', function (d) {
             const u = svg.selectAll("path")
             .data(data_ready)
 
-            // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+            // Building the pie chart: 
             u
             .join('path')
+            // The transition does not always work proprely. We tried to look for solutions online but nothing worked for our project. We undesrtand it is a problem of d3 calculating the position of the arc while transitioning, and that using attrTween would help. As of right now we can't get it to work.
             .transition()
             .duration(1000)
             .attr('d', d3.arc()
                 .innerRadius(0)
                 .outerRadius(radius)
             )
-            .attr('fill', function(d){ return(color(d.data[0])) })
+            .attr('fill', function(d){
+                if(d.data[0] == "El"){
+                    return "hotpink"
+                }
+                else if (d.data[0] == "KM"){
+                    return "purple"
+                }
+             })
             .attr("stroke", "white")
             .style("stroke-width", "2px")
             .style("opacity", 1)
 
+            let ElDiv = document.getElementById("resultElp")
+            ElDiv.innerHTML = `El-p has mentioned ${topic} ${dataset.El} time(s)`
+            let KMDiv = document.getElementById("resultKM")
+            KMDiv.innerHTML = `Killer Mike has mentioned ${topic} ${dataset.KM} time(s)`
+        }
 
-            }
+
             // Initialize the plot with the first dataset
-            update(El)
+            update(dataset)
     })
+
+
+
 </script>
+</body>
+</html>

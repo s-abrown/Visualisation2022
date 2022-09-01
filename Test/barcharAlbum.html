@@ -69,42 +69,43 @@
 
         d3.csv('RTJ4.csv', function (d) {
             return {
-                speaker : d.speaker,
-                boasting : +d.mentionBoasting,
-                killerMike : +d.mentionKillerMike,
-                elP : +d.mentionElP,
-                family : +d.mentionFamily,
-                disillusion : +d.mentionDisillusion,
-                threatening : +d.mentionThreatening,
-                anguish : +d.mentionAnguish,
-                existentialism : +d.mentionExistentialism,
-                poverty : +d.mentionPoverty,
-                education : +d.mentionEducation,
-                wealth : +d.mentionWealth,
-                work : +d.mentionWork,
-                crime : +d.mentionCrime,
-                elections : +d.mentionElections,
-                slavery : +d.mentionSlavery,
-                racism : +d.mentionRacism,
-                revolution : +d.mentionRevolution,
-                antiReligion : +d.mentionAntiReligion,
-                authority : +d.mentionAuthority,
-                antiCapitalism : +d.mentionAntiCapitalism,
-                antiPolice : +d.mentionAntiPolice,
-                money : +d.mentionMoney,
-                car : +d.mentionCar, 
-                weapon : +d.mentionWeapon,
-                socialMedia : +d.mentionSocialMedia,
-                
-                person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
-                feeling : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
-                place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
-                state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
-                object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
-                action : +d.mentionWork + +d.mentionCrime,
-                substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+              speaker : d.speaker,
+              boasting : +d.mentionBoasting,
+              killerMike : +d.mentionKillerMike,
+              elP : +d.mentionElP,
+              family : +d.mentionFamily,
+              disillusion : +d.mentionDisillusion,
+              threatening : +d.mentionThreatening,
+              anguish : +d.mentionAnguish,
+              existentialism : +d.mentionExistentialism,
+              poverty : +d.mentionPoverty,
+              education : +d.mentionEducation,
+              wealth : +d.mentionWealth,
+              work : +d.mentionWork,
+              crime : +d.mentionCrime,
+              elections : +d.mentionElections,
+              slavery : +d.mentionSlavery,
+              racism : +d.mentionRacism,
+              revolution : +d.mentionRevolution,
+              antiReligion : +d.mentionAntiReligion,
+              authority : +d.mentionAuthority,
+              antiCapitalism : +d.mentionAntiCapitalism,
+              antiPolice : +d.mentionAntiPolice,
+              money : +d.mentionMoney,
+              car : +d.mentionCar, 
+              weapon : +d.mentionWeapon,
+              socialMedia : +d.mentionSocialMedia, 
+              
+              person : +d.mentionKillerMike + +d.mentionElP + +d.mentionFamily + +d.mentionOsamaBL + +d.mentionMohammedAli + +d.mentionKurtVonnegut + +d.mentionAynRand + +d.mentionDonaldTrump + +d.mentionToussainLouverture + +d.mentionNapoleonBonaparte + +d.mentionMalcolmX + +d.mentionMLK + +d.mentionJimmySavile + +d.mentionNoamChomsky + +d.mentionCharlesBukowski + +d.mentionDickGregory,
+              feelings : +d.mentionBoasting + +d.mentionDisillusion + +d.mentionThreatening + +d.mentionAnguish + +d.mentionExistentialism,
+              place : +d.mentonBrooklyn + +d.mentionNewYork + +d.mentionMiami + +d.mentionAtlanta + +d.mentionGuantanamo,
+              state : +d.mentionPoverty + +d.mentionEducation + +d.mentionWealth,
+              object : +d.mentionCar + +d.mentionMoney + +d.mentionWeapon + +d.mentionSocialMedia,
+              action : +d.mentionWork + +d.mentionCrime,
+              substanceUse : +d.mentionDrugs + +d.mentionAlcohol + +d.mentionTobacco,
+              politics : +d.mentionAntiReligion + +d.mentionElections + +d.mentionAntiPolice + +d.mentionAntiCapitalism + +d.mentionAuthority,
 
-                trackNumber : +d.trackNumber,
+              trackNumber : +d.trackNumber,
             }
         }).then(data => {
             // Check data:
@@ -132,8 +133,7 @@
             let Elsubstances = 0
             let Elstate = 0
             let Elobjs = 0
-            let Elcrime = 0
-            let Elwork = 0
+            let Elaction = 0
             let Elpolitics = 0
             let boastingAlbumEl = 0
 
@@ -143,34 +143,33 @@
             let KMsubstances = 0
             let KMstate = 0
             let KMobjs = 0
-            let KMcrime = 0
-            let KMwork = 0
+            let KMaction = 0
             let KMpolitics = 0
             let boastingAlbumKM = 0
             for (let i = 0; i < data.length; i++){
                 if (data[i].speaker == 'el-p'){
                     Elmentionpp += data[i].person
-                    Elfeelings += data[i].feeling
+                    Elfeelings += data[i].feelings
                     Elplaces += data[i].place
                     Elsubstances += data[i].substanceUse
                     Elstate += data[i].state
                     Elobjs += data[i].object
-                    Elcrime += data[i].crime
-                    Elwork += data[i].work
+                    Elaction += data[i].action
                     Elpolitics += data[i].politics
                     boastingAlbumEl += data[i].boasting
+                    // add updates here for subcategories
                 }
                 if (data[i].speaker == 'killerMike'){
                     KMmentionpp += data[i].person
-                    KMfeelings += data[i].feeling
+                    KMfeelings += data[i].feelings
                     KMplaces += data[i].place
                     KMsubstances += data[i].substanceUse
                     KMstate += data[i].state
                     KMobjs += data[i].object
-                    KMcrime += data[i].crime
-                    KMwork += data[i].work
+                    KMaction += data[i].action
                     KMpolitics += data[i].politics
                     boastingAlbumKM += data[i].boasting
+                    // idem
                 }
             }
 
@@ -183,9 +182,9 @@
                 {group: "substance use", value: Elsubstances},
                 {group: "state of being", value: Elstate},
                 {group: "objects", value: Elobjs},
-                {group: "crime", value: Elcrime},
-                {group: "work", value: Elwork},
+                {group: "actions", value: Elaction},
                 {group: "politics", value: Elpolitics}
+                // {group: "sub in question, value: value"}
             ]
             console.log(El)
             
@@ -197,9 +196,9 @@
                 {group: "substance use", value: KMsubstances},
                 {group: "state of being", value: KMstate},
                 {group: "objects", value: KMobjs},
-                {group: "crime", value: KMcrime},
-                {group: "work", value: KMwork},
+                {group: "actions", value: KMaction},
                 {group: "politics", value: Elpolitics}
+                // idem
             ]
             console.log(KM)
             // Checking data:
@@ -261,7 +260,12 @@
                     .attr("width", x.bandwidth())
                     .attr("height", d => h - y(d.value))
                     .attr("fill", "#e81ce8")
+                // let update circle1... 
+                // etc    
             }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
             // Initialize the plot with the first dataset:
             updateData(El)
@@ -300,6 +304,150 @@
                                 .duration(500)
                                 .style("opacity", 0)
                             });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Circles on 8 separate canvases
+
+            //scale function for each canvas: 
+            // let rscale = d3.scale.linear()
+            //   .domain([0, d3.max(max)])
+            //   .range([1, 155])
+
+
+
+              
+
+
+            // var rscale = d3.scale.linear()
+            // var rscale = d3.scale.linear()
+            //     .domain([0,d3.max(circs)])
+            //     .range([3,20])
+
+
+              // threes.selectAll('.circles').data(circs)
+              // .enter()
+              // .append('circle')
+
+              // .attr('r', function(d){
+              //   return rscale(d);
+              // })
+              // .attr('class','circles')
+              // .attr('cy', h/2)
+              // .attr('cx',function(d,i){
+              // //  console.log(i)
+              //   return 20+40 *i
+              // })
+
+
+            // Circle Canvas 1 = people
+            const circleCanvas1 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            circleCanvas1.append('g').selectAll('circle')
+              .data(El)
+              .enter()
+              .append('circle')
+                  .attr('cx', (window.innerWidth / 4)/2)
+                  .attr('cy', (200)/2)
+                  .attr('r',  (window.innerWidth / 4)/2)
+                  .attr('fill', "blue")
+                  .attr('opacity',0.6)
+            
+            circleCanvas1.append('g').selectAll('circle')
+                .data(data.filter(function(d){
+                return d.speaker == "el-p" }))
+                .enter()
+                .append('circle')
+                  .attr('cx', (d, i) => {})
+                  .attr('cy', (200)/2)
+                  .attr('r',  (window.innerWidth / 4)/2)
+                  .attr('fill', "blue")
+                  .attr('opacity',0.6)
+
+            //  // CIRCLE COMPARISONS   
+            //  let updateCircleGroup = circlecanvas1.append("g")
+            //         .selectAll("circle")
+            //         .data(data)
+            //         .enter()
+            //         .append("circle")
+            //         .attr("cx", d => {
+            //           if (d.group == "people"){return 100}
+            //           if (d.group == "feelings"){return 300}
+            //           if (d.group == "places"){return 500}
+            //           if (d.group == "substance use"){return 700}
+            //           if (d.group == "state of being"){return 100}
+            //           if (d.group == "objects"){return 300}
+            //           if (d.group == "actions"){return 500}
+            //           if (d.group == "politics"){return 700}
+            //         }) 
+            //         .attr("cy", d => {
+            //           if (d.group == "people"){return 200}
+            //           if (d.group == "feelings"){return 200}
+            //           if (d.group == "places"){return 200}
+            //           if (d.group == "substance use"){return 200}
+            //           if (d.group == "state of being"){return 400}
+            //           if (d.group == "objects"){return 400}
+            //           if (d.group == "actions"){return 400}
+            //           if (d.group == "politics"){return 400}
+            //         })
+            //         .attr("r", d => {
+            //           if (d.group == "people"){return d.value * 2}
+            //           if (d.group == "feelings"){return d.value * 2}
+            //           if (d.group == "places"){return d.value * 2}
+            //           if (d.group == "substance use"){return d.value * 2}
+            //           if (d.group == "state of being"){return d.value * 2}
+            //           if (d.group == "objects"){return d.value * 2}
+            //           if (d.group == "actions"){return d.value * 2}
+            //           if (d.group == "politics"){return d.value * 2}
+            //         })
+                    
+            //         .attr("fill", "purple")
+
+            const circleCanvas2 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas3 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas4 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas5 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas6 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas7 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+
+            const circleCanvas8 = d3.select('body')
+              .append("svg")
+              .attr("width", window.innerWidth / 4)
+              .attr("height", 200)
+            .append('g')
+                            
+            
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //PIE CHART  
             

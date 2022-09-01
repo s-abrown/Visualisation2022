@@ -687,6 +687,8 @@
                     .attr("width", window.innerWidth + margin.left + margin.right)
                     .attr("height", h + margin.top + margin.bottom) // output: NaN?????
                 .append("g")
+                .attr("transform", "translate(" + width/3 + "," + height/3 + ")");
+
 
             // set the dimensions and margins of the graph
             const piewidth = 450, pieheight = 450, piemargin = 40;
@@ -797,11 +799,11 @@
             const data_ready = pie(Object.entries(data))
 
             // map to data
-            const u = canvas2.selectAll("path")
+            const U = canvas2.selectAll("path")
             .data(data_ready)
 
             // Building the pie chart: 
-            u
+            U
             .join('path')
             // The transition does not always work proprely. We tried to look for solutions online but nothing worked for our project. We undesrtand it is a problem of d3 calculating the position of the arc while transitioning, and that using attrTween would help. As of right now we can't get it to work.
             .transition()

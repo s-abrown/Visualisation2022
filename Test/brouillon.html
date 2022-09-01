@@ -504,6 +504,7 @@
             ]
             // Check
             console.log("total main category data for EL-P : ", El)
+            console.log("Why is the value for money for EL-P so high? O_O ", Elmoney)
             
             // II. For KM
             const KM = [
@@ -683,8 +684,8 @@
             
             const canvas2 = d3.select("body")
                 .append("svg")
-                    .attr("width", w + margin.left + margin.right)
-                    .attr("height", h + margin.top + margin.bottom) // NaN?????
+                    .attr("width", window.innerWidth + margin.left + margin.right)
+                    .attr("height", h + margin.top + margin.bottom) // output: NaN?????
                 .append("g")
 
             // set the dimensions and margins of the graph
@@ -784,7 +785,7 @@
                 topic = "actions"
                 update(dataset)
             })
-            console.log(dataset.El)
+            console.log("testing dataset.El", dataset.El)
 
             // A function that create / update the plot for a given variable:
             function update(data) {

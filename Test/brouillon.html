@@ -732,8 +732,8 @@
             const piewidth = 450, pieheight = 450, piemargin = 40;
             const radius = Math.min(piewidth, pieheight) / 2 - piemargin;
 
-            let valueEl = boastingAlbumEl
-            let valueKM = boastingAlbumKM
+            let valueEl = Elboasting
+            let valueKM = KMboasting
 
             let dataset = {El:valueEl, KM:valueKM}
             let topic = "boasting"
@@ -763,8 +763,8 @@
             document.getElementById('boasting')
             .addEventListener('click', function(e){
                 e.preventDefault();
-                valueEl = boastingAlbumEl
-                valueKM = boastingAlbumKM
+                valueEl = Elboasting
+                valueKM = KMboasting
                 dataset = {El:valueEl, KM:valueKM}
                 console.log(dataset)
                 topic = "boasting"

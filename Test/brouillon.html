@@ -117,7 +117,7 @@
                 wealth : +d.mentionWealth,
                 // 6. objects
                 car : +d.mentionCar, 
-                money: d.mentionMoney,
+                money: +d.mentionMoney,
                 weapon : +d.mentionWeapon,
                 socialMedia : +d.mentionSocialMedia, 
                 // 7. actions
@@ -154,10 +154,18 @@
                 w = 500 - margin.left - margin.right,
                 h = 500 - margin.top - margin.bottom;
 
-            // Creating the canvas
+            // Creating the canvas for the first bar chart (group)
             const canvas1 = d3.select("body")
                 .append("svg")
                     .attr("width", w + margin.left + margin.right)
+                    .attr("height", h + margin.top + margin.bottom)
+                .append("g")
+                    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // Creating the canvas for the first bar chart (group)
+            const canvasbar2 = d3.select("body")
+                .append("svg")
+                    .attr("width", window.innerWidth)
                     .attr("height", h + margin.top + margin.bottom)
                 .append("g")
                     .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -454,22 +462,22 @@
                 {group: "politics", value: Elpolitics},
                 //subcategories
                 // 1. people
-                {group: "killerMike", value: ElkillerMike},
-                {group: "elP", value: ElelP},
+                {group: "Killer Mike", value: ElkillerMike},
+                {group: "El-P", value: ElelP},
                 {group: "family", value: Elfamily},
-                {group: "OsamaBenLaden", value: ElOsamaBenLaden},
-                {group: "MohammedAli", value: ElMohammedAli},
-                {group: "KurtVonnegut", value: ElKurtVonnegut},
-                {group: "AynRand", value: ElAynRand},
-                {group: "DonaldTrump", value: ElDonaldTrump},
-                {group: "ToussainLouverture", value: ElToussainLouverture},
-                {group: "NapoleonBonaparte", value: ElNapoleonBonaparte},
-                {group: "MalcolmX", value: ElMalcolmX},
-                {group: "martinLutherKing", value: ElMartinLuterKing},
-                {group: "JimmySaville", value: ElJimmySaville},
-                {group: "NoamChomsky", value: ElNoamChomsky},
-                {group: "CharlesBukowski", value: ElCharlesBukowski},
-                {group: "DickGregory", value: ElDickGregory},
+                {group: "Osama Ben Laden", value: ElOsamaBenLaden},
+                {group: "Mohammed Ali", value: ElMohammedAli},
+                {group: "Kurt Vonnegut", value: ElKurtVonnegut},
+                {group: "Ayn Rand", value: ElAynRand},
+                {group: "Donald Trump", value: ElDonaldTrump},
+                {group: "Toussain Louverture", value: ElToussainLouverture},
+                {group: "Napoleon Bonaparte", value: ElNapoleonBonaparte},
+                {group: "Malcolm X", value: ElMalcolmX},
+                {group: "Martin Luther King", value: ElMartinLuterKing},
+                {group: "Jimmy Saville", value: ElJimmySaville},
+                {group: "Noam Chomsky", value: ElNoamChomsky},
+                {group: "Charles Bukowski", value: ElCharlesBukowski},
+                {group: "Dick Gregory", value: ElDickGregory},
                 // 2. feelings
                 {group: "boasting", value: boastingAlbumEl},
                 {group: "disillusion", value: Eldisillusion},
@@ -477,11 +485,11 @@
                 {group: "anguish", value: Elanguish},
                 {group: "existentialism", value: Elexistentialism},
                 // 3. places
-                {group: "brooklyn", value: Elbrooklyn},
-                {group: "newYork", value: ElnewYork},
-                {group: "miami", value: Elmiami},
-                {group: "atlanta", value: Elatlanta},
-                {group: "guantanamo", value: Elguantanamo},
+                {group: "Brooklyn", value: Elbrooklyn},
+                {group: "New York", value: ElnewYork},
+                {group: "Miami", value: Elmiami},
+                {group: "Atlanta", value: Elatlanta},
+                {group: "Guantanamo", value: Elguantanamo},
                 // 4. substance use
                 {group: "drugs", value: Eldrugs},
                 {group: "alcohol", value: Elalcohol},
@@ -494,23 +502,22 @@
                 {group: "car", value: Elcar},
                 {group: "money", value: Elmoney},
                 {group: "weapon", value: Elweapon},
-                {group: "socialMedia", value: ElsocialMedia},
+                {group: "social media", value: ElsocialMedia},
                 // 7. action
                 {group: "work", value: Elwork},
                 {group: "crime", value: Elcrime},
                 // 8. politics
-                {group: "antiCapitalism", value: ElantiCapitalism},
-                {group: "antiPolice", value: ElantiPolice},
+                {group: "anti Capitalism", value: ElantiCapitalism},
+                {group: "anti police", value: ElantiPolice},
                 {group: "authority", value: Elauthority},
                 {group: "slavery", value: Elslavery},
                 {group: "racism", value: Elracism},
                 {group: "elections", value: Elelections},
                 {group: "revolution", value: Elrevolution},
-                {group: "antiReligion", value: ElantiReligion},
+                {group: "anti religion", value: ElantiReligion},
             ]
             // Check
-            console.log("total main category data for EL-P : ", El)
-            console.log("Why is the value for money for EL-P so high? O_O ", Elmoney)
+            console.log("Complete dataset for El-P : ", El)
             
             // II. For KM
             const KM = [
@@ -525,22 +532,22 @@
                 {group: "politics", value: Elpolitics},
                 // subcategories
                 // 1. people
-                {group: "killerMike", value: KMkillerMike},
-                {group: "elP", value: KMelP},
+                {group: "Killer Mike", value: KMkillerMike},
+                {group: "El-P", value: KMelP},
                 {group: "family", value: KMfamily},
-                {group: "OsamaBenLaden", value: KMOsamaBenLaden},
-                {group: "MohammedAli", value: KMMohammedAli},
-                {group: "KurtVonnegut", value: KMKurtVonnegut},
-                {group: "AynRand", value: KMAynRand},
-                {group: "DonaldTrump", value: KMDonaldTrump},
-                {group: "ToussainLouverture", value: KMToussainLouverture},
-                {group: "NapoleonBonaparte", value: KMNapoleonBonaparte},
-                {group: "MalcolmX", value: KMMalcolmX},
-                {group: "martinLutherKing", value: KMMartinLuterKing},
-                {group: "JimmySaville", value: KMJimmySaville},
-                {group: "NoamChomsky", value: KMNoamChomsky},
-                {group: "CharlesBukowski", value: KMCharlesBukowski},
-                {group: "DickGregory", value: KMDickGregory},
+                {group: "Osama Ben Laden", value: KMOsamaBenLaden},
+                {group: "Mohammed Ali", value: KMMohammedAli},
+                {group: "Kurt Vonnegut", value: KMKurtVonnegut},
+                {group: "Ayn Rand", value: KMAynRand},
+                {group: "Donald Trump", value: KMDonaldTrump},
+                {group: "Toussain Louverture", value: KMToussainLouverture},
+                {group: "Napoleon Bonaparte", value: KMNapoleonBonaparte},
+                {group: "Malcolm X", value: KMMalcolmX},
+                {group: "Martin Luther King", value: KMMartinLuterKing},
+                {group: "Jimmy Saville", value: KMJimmySaville},
+                {group: "Noam Chomsky", value: KMNoamChomsky},
+                {group: "Charles Bukowski", value: KMCharlesBukowski},
+                {group: "Dick Gregory", value: KMDickGregory},
                 // 2. feelings
                 {group: "boasting", value: boastingAlbumKM},
                 {group: "disillusion", value: KMdisillusion},
@@ -548,11 +555,11 @@
                 {group: "anguish", value: KManguish},
                 {group: "existentialism", value: KMexistentialism},
                 // 3. places
-                {group: "brooklyn", value: KMbrooklyn},
-                {group: "newYork", value: KMnewYork},
-                {group: "miami", value: KMmiami},
-                {group: "atlanta", value: KMatlanta},
-                {group: "guantanamo", value: KMguantanamo},
+                {group: "Brooklyn", value: KMbrooklyn},
+                {group: "New York", value: KMnewYork},
+                {group: "Miami", value: KMmiami},
+                {group: "Atlanta", value: KMatlanta},
+                {group: "Guantanamo", value: KMguantanamo},
                 // 4. substance use
                 {group: "drugs", value: KMdrugs},
                 {group: "alcohol", value: KMalcohol},
@@ -570,23 +577,23 @@
                 {group: "work", value: KMwork},
                 {group: "crime", value: KMcrime},
                 // 8. politics
-                {group: "antiCapitalism", value: KMantiCapitalism},
-                {group: "antiPolice", value: KMantiPolice},
+                {group: "anti Capitalism", value: KMantiCapitalism},
+                {group: "anti police", value: KMantiPolice},
                 {group: "authority", value: KMauthority},
                 {group: "slavery", value: KMslavery},
                 {group: "racism", value: KMracism},
                 {group: "elections", value: KMelections},
                 {group: "revolution", value: KMrevolution},
-                {group: "antiReligion", value: KMantiReligion},
+                {group: "anti religion", value: KMantiReligion},
             ]
             // Check
-            console.log("total main category data for Killer Mike : ", KM)
+            console.log("Complete dataset for Killer Mike : ", KM)
 
 
-            // Adding X axis
+            // Adding X axis for first bar chart
             const x = d3.scaleBand()
                 .range([0, w])
-                .domain(El.map(d => d.group))
+                .domain(["people", "feelings", "places", "substance use", "state of being", "objects", "actions", "politics"])
                 .padding(0.2);
             canvas1.append("g")
                 .attr("transform", `translate(0,${h})`)
@@ -596,28 +603,37 @@
                     .style("text-anchor", "end")
                     .style("font-size", 15)
                     .style("color", "purple")
+
+              // Adding X axis for second bar chart
+            const x2 = d3.scaleBand()
+                .range([0, window.innerWidth - 80])
+                .domain(["Killer Mike", "El-P", "family", "Osama Ben Laden", "Mohammed Ali", "Kurt Vonnegut", "Ayn Rand", "Donald Trump", "Toussain Louverture", "Napoleon Bonaparte", "Malcolm X", "Martin Luther King", "Jimmy Saville", "Noam Chomsky", "Charles Bukowski", "Dick Gregory","boasting", "disillusion", "threatening", "anguish", "existentialism", "Brooklyn", "New York", "Miami", "Atlanta", "Guantanamo","drugs", "alcohol", "tobacco", "poverty", "education", "wealth", "car", "money", "weapon", "social media", "work", "crime", "anti Capitalism", "anti police", "authority", "slavery", "racism", "elections", "revolution", "anti religion"])
+                .padding(0.2);
+            canvasbar2.append("g")
+                .attr("transform", `translate(0,${h})`)
+                .call(d3.axisBottom(x2))
+                .selectAll("text")
+                    .attr("transform", "translate(-10,0)rotate(-45)")
+                    .style("text-anchor", "end")
+                    .style("font-size", 10)
+                    .style("color", "purple")
             
-            // Add Y axis
+            // Add Y axis for first bar char
             const y = d3.scaleLinear()
                 .domain([0, 160])
                 .range([ h, 0]);
             canvas1.append("g")
                 .attr("class", "myYaxis")
                 .call(d3.axisLeft(y));
+
+            // Adding Y axis for second bar char
+            const y2 = d3.scaleLinear()
+                .domain([0, 60])
+                .range([ h, 0]);
+            canvasbar2.append("g")
+                .attr("class", "myYaxis")
+                .call(d3.axisLeft(y2));
             
-            // Adding event listeners for each button
-            // For El-P's button
-            document.getElementById('Elbutton')
-                .addEventListener('click', function(e){
-                    e.preventDefault();
-                    return El
-                })
-            // For KM's button
-            document.getElementById('KMbutton')
-                .addEventListener('click', function(e){
-                    e.preventDefault();
-                    return KM
-            })
 
             // Making a tooltip
             var div = d3.select("body").append("div")
@@ -637,19 +653,26 @@
                     .attr("width", x.bandwidth())
                     .attr("height", d => h - y(d.value))
                     .attr("fill", "#e81ce8")
-                // let update circle1... 
-                // etc    
+              // Creating the rect for the second bar char 
+                let updateBar2 = canvasbar2.selectAll('rect')
+                    .data(data)
+                    .join('rect')
+                    .transition()
+                    .ease(d3.easeBounce)
+                    .duration(1500)
+                    .attr("x", d => x2(d.group))
+                    .attr("y", d => y2(d.value))
+                    .attr("width", x2.bandwidth())
+                    .attr("height", d => h - y2(d.value))
+                    .attr("fill", "#e81ce8") 
             }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-            // Initialize the plot with the first dataset:
+            // Initialize the plot with the first dataset
             updateData(El)
 
             let name = "El-p"
 
-            // For El-P's button
+            // Add event listener to the El-p button so that when clicked the dataset is updated
             document.getElementById('Elbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
@@ -657,7 +680,7 @@
                     name = "El-p"
                 })
             
-            // For KM's button
+            // Add event listener to the El-p button so that when clicked the dataset is updated
             document.getElementById('KMbutton')
                 .addEventListener('click', function(e){
                     e.preventDefault();
@@ -665,7 +688,7 @@
                     name = "Killer Mike"
             })
 
-            // Adding the mouseover event to each rectangle to display the tooltip and display the value of each bar:
+            // Addind the tooltip to each canvas for the bar charts, with the aid of a mouseover event
             canvas1.selectAll("rect")
             .on("mouseover", function(event,d) {
                             div.transition()
@@ -681,8 +704,21 @@
                                 .duration(500)
                                 .style("opacity", 0)
                             });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// CIRCLES 
+            canvasbar2.selectAll("rect")
+            .on("mouseover", function(event,d) {
+                            div.transition()
+                                .duration(200)
+                                .style("opacity", .9)
+                                .style("border", "solid 2px")
+                            div.html(`${name} has mentioned ${d.group} <br/> ${d.value} times throughout the album`)
+                                .style("left", (event.pageX) + "px")
+                                .style("top", (event.pageY - 28) + "px");
+                            })
+                            .on("mouseout", function(d) {
+                            div.transition()
+                                .duration(500)
+                                .style("opacity", 0)
+                            });
                             
             
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

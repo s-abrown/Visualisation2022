@@ -200,8 +200,7 @@
             let ElCharlesBukowski = 0
             let ElDickGregory = 0
             // 2. feelings (5 total)
-            let boastingAlbumEl = 0
-            // Is this better for cohesiveness' sake? --> let Elboasting = 0
+            let Elboasting = 0
             let Eldisillusion = 0
             let Elthreatening = 0
             let Elanguish = 0
@@ -268,8 +267,7 @@
             let KMCharlesBukowski = 0
             let KMDickGregory = 0
             // 2. feelings (5 total)
-            let boastingAlbumKM = 0
-            // Is this better for cohesiveness' sake? --> let KMboasting = 0
+            let KMboasting = 0
             let KMdisillusion = 0
             let KMthreatening = 0
             let KManguish = 0
@@ -338,8 +336,7 @@
                     ElCharlesBukowski += data[i].CharlesBukowski
                     ElDickGregory += data[i].DickGregory
                     // 2. feelings (5)
-                    boastingAlbumEl += data[i].boasting
-                    // Is this better for cohesiveness' sake? --> let Elboasting = 0
+                    Elboasting += data[i].boasting
                     Eldisillusion += data[i].disillusion
                     Elthreatening += data[i].threatening
                     Elanguish += data[i].anguish
@@ -407,8 +404,7 @@
                     KMCharlesBukowski += data[i].CharlesBukowski
                     KMDickGregory += data[i].DickGregory
                     // 2. feelings (5)
-                    boastingAlbumKM += data[i].boasting
-                    // Is this better for cohesiveness' sake? --> let KMboasting = 0
+                    KMboasting += data[i].boasting
                     KMdisillusion += data[i].disillusion
                     KMthreatening += data[i].threatening
                     KManguish += data[i].anguish
@@ -479,7 +475,7 @@
                 {group: "Charles Bukowski", value: ElCharlesBukowski},
                 {group: "Dick Gregory", value: ElDickGregory},
                 // 2. feelings
-                {group: "boasting", value: boastingAlbumEl},
+                {group: "boasting", value: Elboasting},
                 {group: "disillusion", value: Eldisillusion},
                 {group: "threatening", value: Elthreatening},
                 {group: "anguish", value: Elanguish},
@@ -549,7 +545,7 @@
                 {group: "Charles Bukowski", value: KMCharlesBukowski},
                 {group: "Dick Gregory", value: KMDickGregory},
                 // 2. feelings
-                {group: "boasting", value: boastingAlbumKM},
+                {group: "boasting", value: KMboasting},
                 {group: "disillusion", value: KMdisillusion},
                 {group: "threatening", value: KMthreatening},
                 {group: "anguish", value: KManguish},

@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Album Simple Bar Chart</title>
     <style>
+
+        body {
+          background-color: whitesmoke;
+        }
+
         svg {
             background-color: whitesmoke;
             margin: 1px solid;
+        }
+
+        h1, h2 {
+          text-align: center;
+          padding: 2px;
+        }
+        h1 {
+          margin-top: 3%;
         }
 
         div.tooltip {
@@ -25,57 +38,101 @@
         }
 
         button {
-            border-radius:10px;
-            background-color:#e81ce8;
-            color: white;
+            border-radius:7px;
+            background-color:#c482ea;
+            color: whitesmoke;
+            font-size: 18px;
+            padding: 1.5%;
+            border: 1px solid #c482ea;
         }
         /*  */
+        #my_pie {
+          margin-top: 10%;
+        }
+        .pieInteractions {
+          flex: column;
+          float: right;
+          margin-top: 0.5%;
+          margin-right: 10%;
+          font-size: 17px;
+          color: whitesmoke
+        }
         .pieResults {
             border-radius:10px;
-            background-color:#e81ce8;
-            color: white;
+            background-color:#c482ea;
             width: 50%;
+            padding: 3%;
             float: right;
+            margin-top: 1%;
         }
-        #resultKM {
-          background-color: purple;
+
+        .pieResults * {
+          padding-top: 2%;
+          padding-bottom: 2%;
+          padding-right: 2%;
+          padding-left: 5%;
+          background-color: #c17aeb; 
+          margin-top: 1.5%;
+          border-radius:10px;
         }
+
+        #parameters {
+          text-align: center;
+          margin-bottom: 7%;
+        }
+
         .pieOptions {
             border-radius:10px;
-            background-color:#e81ce8;
-            color: white;
+            background-color:#c482ea;
             width: 50%;
             float: right;
+            padding: 3%;
+        }
+        .pieOptions * {
+          padding-top: 2%;
+          padding-bottom: 2%;
+          padding-right: 2%;
+          padding-left: 5%;
+          background-color: #c17aeb; 
+          margin-top: 1.5%;
+          border-radius:10px;
+        }
+
+        #my_heatmap {
+          margin-top: 10%;
         }
 
     </style>
 </head>
 <body>
-    <div id="my_bar" class = "barChar"></div>
+    <h1>A visualisation of the fourth album of Yankee and the Brave</h1>
+    <h2>Based on which artist mentions what</h2>
+    <div class = "barChar"></div>
       <button id= "Elbutton">El-p</button>
       <button id= "KMbutton">Killer Mike</button>
+      <div id="my_bar"></div>
       <div id="my_bar2"></div>
     </div>
 
     <!-- Create a div where the graph will take place -->
     <div id = "my_pie" class="pieChart">
-      <div class="pieOptions">
-          <div> Choose parameters: </div>
-          </br>
-          <div id="feelings">Feelings</div>
-          <div id="boasting">Boasting</div>
-          <div id="substanceUse">Substance use</div>
-          <div id="people">People</div>
-          <div id="place">Place</div>
-          <div id="state">State</div>
-          <div id="object">Object</div>
-          <div id="action">Action</div>
-      </div>
-          <div class = "pieResults">
-            <div id="resultElp"></div>
-            </br>
-            <div id="resultKM"></div>
+      <div class="pieInteractions">
+        <div class="pieOptions">
+            <div id = "parameters"> Choose parameters </div>
+            <div id="feelings">Feelings</div>
+            <div id="boasting">Boasting</div>
+            <div id="substanceUse">Substance use</div>
+            <div id="people">People</div>
+            <div id="place">Place</div>
+            <div id="state">State</div>
+            <div id="object">Object</div>
+            <div id="action">Action</div>
           </div>
+            <div class = "pieResults">
+              <div id="resultElp"></div>
+              <div id="resultKM"></div>
+          </div>
+        </div>
       </div>
 
     <div id = "my_heatmap">
@@ -209,10 +266,8 @@
             // Creating the canvas for the heatmap
             let canvas3 = d3.select('#my_heatmap')
                 .append('svg')
-                //.attr('width', width - 40)
                 .attr("width", width)
-                //.attr('height', height - 40)
-                .attr("height", height + margin.top + margin.bottom)
+                .attr("height", h + margin.top + margin.bottom)
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
             
             // Looping through the dataset to obtain what we need for the graphs while splitting both speakers: 
@@ -617,7 +672,7 @@
                 {group: "car", value: KMcar},
                 {group: "money", value: KMmoney},
                 {group: "weapon", value: KMweapon},
-                {group: "socialMedia", value: KMsocialMedia},
+                {group: "social media", value: KMsocialMedia},
                 // 7. action
                 {group: "work", value: KMwork},
                 {group: "crime", value: KMcrime},
@@ -697,14 +752,14 @@
                     .attr("width", x.bandwidth())
                     .attr("height", d => h - y(d.value))
                     .attr("fill", d => {
-                      if (d.group == "people"){return "#eb4034"}
-                      if (d.group == "feelings"){return "#ed8421"}
-                      if (d.group == "places"){return "#f2cc22"}
-                      if (d.group == "substance use"){return "#178210"}
-                      if (d.group == "state of being"){return "#40f7d9"}
-                      if (d.group == "objects"){return "#19c1e3"}
-                      if (d.group == "actions"){return "#0b1bd4"}
-                      if (d.group == "politics"){return "#8107e6"}
+                      if (d.group == "people"){return "#f9d5f2"}
+                      if (d.group == "feelings"){return "#e7b9f0"}
+                      if (d.group == "places"){return "#d59ded"}
+                      if (d.group == "substance use"){return "#c482ea"}
+                      if (d.group == "state of being"){return "#b166e8"}
+                      if (d.group == "objects"){return "#9f4ae5"}
+                      if (d.group == "actions"){return "#8d2ee2"}
+                      if (d.group == "politics"){return "#7a13e0"}
                     })
             }
 
@@ -721,52 +776,52 @@
                     .attr("width", x2.bandwidth())
                     .attr("height", d => h - y2(d.value))
                     .attr("fill", d => {
-                      if (d.group == "Killer Mike"){return "#eb4034"}
-                      if (d.group == "El-P"){return "#eb4034"}
-                      if (d.group == "family"){return "#eb4034"}
-                      if (d.group == "Osama Bin Laden"){return "#eb4034"}
-                      if (d.group == "Mohammed Ali"){return "#eb4034"}
-                      if (d.group == "Kurt Vonnegut"){return "#eb4034"}
-                      if (d.group == "Donald Trump"){return "#eb4034"}
-                      if (d.group == "Ayn Rand"){return "#eb4034"}
-                      if (d.group == "Toussain Louverture"){return "#eb4034"}
-                      if (d.group == "Napoleon Bonaparte"){return "#eb4034"}
-                      if (d.group == "Malcolm X"){return "#eb4034"}
-                      if (d.group == "Martin Luther King"){return "#eb4034"}
-                      if (d.group == "Jimmy Saville"){return "#eb4034"}
-                      if (d.group == "Noam Chomsky"){return "#eb4034"}
-                      if (d.group == "Charles Bukowski"){return "#eb4034"}
-                      if (d.group == "Dick Gregory"){return "#eb4034"}
-                      if (d.group == "boasting"){return "#ed8421"}
-                      if (d.group == "threatening"){return "#ed8421"}
-                      if (d.group == "disillusion"){return "#ed8421"}
-                      if (d.group == "anguish"){return "#ed8421"}
-                      if (d.group == "existentialism"){return "#ed8421"}
-                      if (d.group == "Brooklyn"){return "#f2cc22"}
-                      if (d.group == "New York"){return "#f2cc22"}
-                      if (d.group == "Miami"){return "#f2cc22"}
-                      if (d.group == "Atlanta"){return "#f2cc22"}
-                      if (d.group == "Guantanamo"){return "#f2cc22"}
-                      if (d.group == "drugs"){return "#178210"}
-                      if (d.group == "alcohol"){return "#178210"}
-                      if (d.group == "tobacco"){return "#178210"}
-                      if (d.group == "poverty"){return "#40f7d9"}
-                      if (d.group == "education"){return "#40f7d9"}
-                      if (d.group == "wealth"){return "#40f7d9"}
-                      if (d.group == "car"){return "#19c1e3"}
-                      if (d.group == "money"){return "#19c1e3"}
-                      if (d.group == "weapon"){return "#19c1e3"}
-                      if (d.group == "social media"){return "#19c1e3"}
-                      if (d.group == "work"){return "#0b1bd4"}
-                      if (d.group == "crime"){return "#0b1bd4"}
-                      if (d.group == "anti Capitalism"){return "#8107e6"}
-                      if (d.group == "anti police"){return "#8107e6"}
-                      if (d.group == "authority"){return "#8107e6"}
-                      if (d.group == "slavery"){return "#8107e6"}
-                      if (d.group == "racism"){return "#8107e6"}
-                      if (d.group == "elections"){return "#8107e6"}
-                      if (d.group == "revolution"){return "#8107e6"}
-                      if (d.group == "anti religion"){return "#8107e6"}
+                      if (d.group == "Killer Mike"){return "#f9d5f2"}
+                      if (d.group == "El-P"){return "#f9d5f2"}
+                      if (d.group == "family"){return "#f9d5f2"}
+                      if (d.group == "Osama Bin Laden"){return "#f9d5f2"}
+                      if (d.group == "Mohammed Ali"){return "#f9d5f2"}
+                      if (d.group == "Kurt Vonnegut"){return "#f9d5f2"}
+                      if (d.group == "Donald Trump"){return "#f9d5f2"}
+                      if (d.group == "Ayn Rand"){return "#f9d5f2"}
+                      if (d.group == "Toussain Louverture"){return "#f9d5f2"}
+                      if (d.group == "Napoleon Bonaparte"){return "#f9d5f2"}
+                      if (d.group == "Malcolm X"){return "#f9d5f2"}
+                      if (d.group == "Martin Luther King"){return "#f9d5f2"}
+                      if (d.group == "Jimmy Saville"){return "#ffdef3"}
+                      if (d.group == "Noam Chomsky"){return "#f9d5f2"}
+                      if (d.group == "Charles Bukowski"){return "#f9d5f2"}
+                      if (d.group == "Dick Gregory"){return "#f9d5f2"}
+                      if (d.group == "boasting"){return "#e7b9f0"}
+                      if (d.group == "threatening"){return "#e7b9f0"}
+                      if (d.group == "disillusion"){return "#e7b9f0"}
+                      if (d.group == "anguish"){return "#e7b9f0"}
+                      if (d.group == "existentialism"){return "#e7b9f0"}
+                      if (d.group == "Brooklyn"){return "#d59ded"}
+                      if (d.group == "New York"){return "#d59ded"}
+                      if (d.group == "Miami"){return "#d59ded"}
+                      if (d.group == "Atlanta"){return "#d59ded"}
+                      if (d.group == "Guantanamo"){return "#d59ded"}
+                      if (d.group == "drugs"){return "#c482ea"}
+                      if (d.group == "alcohol"){return "#c482ea"}
+                      if (d.group == "tobacco"){return "#c482ea"}
+                      if (d.group == "poverty"){return "#b166e8"}
+                      if (d.group == "education"){return "#b166e8"}
+                      if (d.group == "wealth"){return "#b166e8"}
+                      if (d.group == "car"){return "#9f4ae5"}
+                      if (d.group == "money"){return "#9f4ae5"}
+                      if (d.group == "weapon"){return "#9f4ae5"}
+                      if (d.group == "social media"){return "#9f4ae5"}
+                      if (d.group == "work"){return "#8d2ee2"}
+                      if (d.group == "crime"){return "#8d2ee2"}
+                      if (d.group == "anti Capitalism"){return "#7a13e0"}
+                      if (d.group == "anti police"){return "#7a13e0"}
+                      if (d.group == "authority"){return "#7a13e0"}
+                      if (d.group == "slavery"){return "#7a13e0"}
+                      if (d.group == "racism"){return "#7a13e0"}
+                      if (d.group == "elections"){return "#7a13e0"}
+                      if (d.group == "revolution"){return "#7a13e0"}
+                      if (d.group == "anti religion"){return "#7a13e0"}
                     }) 
             }
 
@@ -951,13 +1006,13 @@
               )
               .attr('fill', function(d){
                   if(d.data[0] == "El"){
-                      return "hotpink"
+                      return "#f9d5f2"
                   }
                   else if (d.data[0] == "KM"){
-                      return "purple"
+                      return "#d59ded"
                   }
               })
-              .attr("stroke", "white")
+              .attr("stroke", "whitesmoke")
               .style("stroke-width", "2px")
               .style("opacity", 1)
               .attr("transform", "translate(" + (w/2 - 300) + "," + (h/2 - 200) + ")");

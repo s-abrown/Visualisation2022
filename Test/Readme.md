@@ -31,9 +31,9 @@ Once this data was sorted and collected, it was compiled [in a csv file](RTJ4.cs
 ## Graph presentation
 <!-- presentation of each visualisation -->
 
-We have created four graphs for the purposes of this project to allow viewers to contrast and compare the lyrical themes between El-P and Killer Mike, based on the number of instances a category or subcategory is mentioned. 
+We have created four graphs for the purposes of this project to allow viewers to contrast and compare the lyrical themes between El-P and Killer Mike, based on the number of instances a category or a subcategory is mentioned. 
 
-### A bar graph to give a general overview of the broad lyrical themes for El-P and Killer Mike across the entire 'RTJ4' album
+### I. A bar graph to give a general overview of the broad lyrical themes for El-P and Killer Mike across the entire 'RTJ4' album
 
 The first graph produced is a bar chart which shows how many times El-P and Killer Mike have mentioned each one of the eight main categories specified above throughout the entirety of 'RTJ4'. 
 
@@ -44,19 +44,27 @@ We have included buttons which enable the viewer to toggle between both speakers
 ![image](markdownImages/buttons.png) ![image](markdownImages/barChart1ToolTip.png)
 
 
-### A bar graph to give a more in-depth overview of 
+### II. A second bar graph to give a more in-depth overview of 
 
 The second graph offers a comprehensive breakdown of each of the main eight categories into their component subcategories. The abovementioned button will also enable the user to toggle between El-P's and Killer Mike's data. The subcategories of each main category (improve wording) are color coded for clarity's sake.
 
-![image](markdownImages/barChart1ToolTip.png)
+![image](markdownImages/BarChart2.jpeg)
 
-### A pie graph to enable viewers to directly compare the share btw each speaker
-
-
+- Tooltip and buttons work for it too
 
 
+### III. A pie graph to enable viewers to directly compare the share btw each speaker
 
-### A heat map to give viewers a detailed overview of each speaker's lyrical themes across the album
+- Explanation (direct side by side comparison for the main categories, toggle via divs)
+
+![image](markdownImages/pieChart.png)
+
+
+### IV. A heat map to give viewers a detailed overview of each speaker's lyrical themes across the album
+
+- Explanation: 
+
+![image](markdownImages/Heatmap.jpeg)
 
 + button to toggle 
 + tooltip
@@ -64,15 +72,16 @@ The second graph offers a comprehensive breakdown of each of the main eight cate
 ## Project progress summary
 - significant time spent compiling data
 - difficulties adding the various HTMLs together?
-- ?
+- Acknowledge the repetitive/copy pasting of the data/group making?
 
 ## Conclusion
-<!-- Can add some analysis examples (aka existentialism El-P vs Killer Mike/ people mentioned (KM= heavy emphasis on MLK/Toussain/Malcolm X) or places (KM = Atlanta, El-P Brooklyn))-->
+<!-- I will add some analysis examples (aka existentialism El-P vs Killer Mike/ people mentioned (KM= heavy emphasis on MLK/Toussain/Malcolm X) or places (KM = Atlanta, El-P Brooklyn))-->
 
 
 
 ## Tools used
 This project was conducted using the D3 JavaScript library and Visual Studio Code.
+
 - Live share utilised as we worked together in person therefore the commits to this Github are not reflective of the work distribution.
 
 

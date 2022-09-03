@@ -26,15 +26,16 @@
         div.tooltip {
             position: absolute;
             text-align: center;
-            width: 60px;
-            height: 85px;
-            padding: 2px;
+            width: 5%;
+            height: 15%;
+            padding: 1%;
             font: 12px sans-serif;
             background: #f2b8ec;
-            border: 0px;
+            border: 1px;
             border-radius: 8px;
             pointer-events: none;
             display: inline-block;
+            color: #7a13e0;
         }
 
         button {
@@ -44,6 +45,10 @@
             font-size: 18px;
             padding: 1.5%;
             border: 1px solid #c482ea;
+        }
+        button:focus {
+          border: solid 2px black;
+
         }
         /*  */
         #my_pie {
@@ -64,6 +69,7 @@
             padding: 3%;
             float: right;
             margin-top: 1%;
+            background-color: whitesmoke;
         }
 
         .pieResults * {
@@ -71,9 +77,17 @@
           padding-bottom: 2%;
           padding-right: 2%;
           padding-left: 5%;
-          background-color: #c17aeb; 
           margin-top: 1.5%;
           border-radius:10px;
+          background-color: whitesmoke;
+        }
+
+        #resultElp {
+          background-color: #f9d5f2;
+        }
+        
+        #resultKM {
+          background-color: #d59ded;
         }
 
         #parameters {
@@ -97,7 +111,7 @@
           margin-top: 1.5%;
           border-radius:10px;
         }
-
+        
         #my_heatmap {
           margin-top: 10%;
         }
@@ -105,8 +119,8 @@
     </style>
 </head>
 <body>
-    <h1>A visualisation of the fourth album of Yankee and the Brave</h1>
-    <h2>Based on which artist mentions what</h2>
+    <h1>A visualisation of "RTJ4" by Run the Jewels </h1>
+    <h2>A thematical analysis</h2>
     <div class = "barChar"></div>
       <button id= "Elbutton">El-p</button>
       <button id= "KMbutton">Killer Mike</button>
@@ -164,7 +178,7 @@
                 ToussainLouverture : +d.mentionToussainLouverture,
                 NapoleonBonaparte : +d.mentionNapoleonBonaparte,
                 MalcolmX : +d.mentionMalcolmX,
-                MartinLuterKing : +d.mentionMLK,
+                MartinLutherKing : +d.mentionMLK,
                 JimmySaville : +d.mentionJimmySavile,
                 NoamChomsky : +d.mentionNoamChomsky,
                 CharlesBukowski : +d.mentionCharlesBukowski,
@@ -267,7 +281,7 @@
             // Creating the canvas for the heatmap
             let canvas3 = d3.select('#my_heatmap')
                 .append('svg')
-                .attr("width", width)
+                .attr("width", window.innerWidth)
                 .attr("height", h + margin.top + margin.bottom)
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
             
@@ -296,7 +310,7 @@
             let ElToussainLouverture = 0;
             let ElNapoleonBonaparte = 0;
             let ElMalcolmX = 0;
-            let ElMartinLuterKing = 0;
+            let ElMartinLutherKing = 0;
             let ElJimmySaville = 0;
             let ElNoamChomsky = 0;
             let ElCharlesBukowski = 0;
@@ -363,7 +377,7 @@
             let KMToussainLouverture = 0;
             let KMNapoleonBonaparte = 0;
             let KMMalcolmX = 0;
-            let KMMartinLuterKing = 0;
+            let KMMartinLutherKing = 0;
             let KMJimmySaville = 0;
             let KMNoamChomsky = 0;
             let KMCharlesBukowski = 0;
@@ -434,7 +448,7 @@
                     ElToussainLouverture += data[i].ToussainLouverture
                     ElNapoleonBonaparte += data[i].NapoleonBonaparte
                     ElMalcolmX += data[i].MalcolmX
-                    ElMartinLuterKing += data[i].MartinLuterKing
+                    ElMartinLutherKing += data[i].MartinLutherKing
                     ElJimmySaville += data[i].JimmySaville
                     ElNoamChomsky += data[i].NoamChomsky
                     ElCharlesBukowski += data[i].CharlesBukowski
@@ -502,7 +516,7 @@
                     KMToussainLouverture += data[i].ToussainLouverture
                     KMNapoleonBonaparte += data[i].NapoleonBonaparte
                     KMMalcolmX += data[i].MalcolmX
-                    KMMartinLuterKing += data[i].martinLutherKing
+                    KMMartinLutherKing += data[i].MartinLutherKing
                     KMJimmySaville += data[i].JimmySaville
                     KMNoamChomsky += data[i].NoamChomsky
                     KMCharlesBukowski += data[i].CharlesBukowski
@@ -574,7 +588,7 @@
                 {group: "Toussain Louverture", value: ElToussainLouverture},
                 {group: "Napoleon Bonaparte", value: ElNapoleonBonaparte},
                 {group: "Malcolm X", value: ElMalcolmX},
-                {group: "Martin Luther King", value: ElMartinLuterKing},
+                {group: "Martin Luther King", value: ElMartinLutherKing},
                 {group: "Jimmy Saville", value: ElJimmySaville},
                 {group: "Noam Chomsky", value: ElNoamChomsky},
                 {group: "Charles Bukowski", value: ElCharlesBukowski},
@@ -644,7 +658,7 @@
                 {group: "Toussain Louverture", value: KMToussainLouverture},
                 {group: "Napoleon Bonaparte", value: KMNapoleonBonaparte},
                 {group: "Malcolm X", value: KMMalcolmX},
-                {group: "Martin Luther King", value: KMMartinLuterKing},
+                {group: "Martin Luther King", value: KMMartinLutherKing},
                 {group: "Jimmy Saville", value: KMJimmySaville},
                 {group: "Noam Chomsky", value: KMNoamChomsky},
                 {group: "Charles Bukowski", value: KMCharlesBukowski},
@@ -740,8 +754,6 @@
             var div = d3.select("body").append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0)
-                .style("padding", "1%")
-                .style("padding-bottom", "2%")
 
             // Appending the rectangles to the graph (using functions so as to easily call it when clicking one of the buttons)
             function updateData(data){
@@ -904,7 +916,7 @@
                     valueEl = Elmentionpp
                     valueKM = KMmentionpp
                     dataset = {El:valueEl, KM:valueKM}
-                    console.log(dataset)
+                    //console.log(dataset)
                     topic = "people"
                     update(dataset)
                 });
@@ -915,7 +927,7 @@
                 valueEl = Elfeelings
                 valueKM = KMfeelings
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "feelings"
                 update(dataset)
             });
@@ -926,7 +938,7 @@
                 valueEl = Elboasting
                 valueKM = KMboasting
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "boasting"
                 update(dataset)
             });
@@ -937,7 +949,7 @@
                 valueEl = Elsubstances
                 valueKM = KMsubstances
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "substance use"
                 update(dataset)
             });
@@ -948,7 +960,7 @@
                 valueEl = Elplaces
                 valueKM = KMplaces
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "places"
                 update(dataset)
             });
@@ -959,7 +971,7 @@
                 valueEl = Elstate
                 valueKM = KMstate
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "states of being"
                 update(dataset)
             });
@@ -970,7 +982,7 @@
                 valueEl = Elobjs
                 valueKM = KMobjs
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "objects"
                 update(dataset)
             });
@@ -981,7 +993,7 @@
                 valueEl = Elcrime + Elwork
                 valueKM = KMcrime + KMwork
                 dataset = {El:valueEl, KM:valueKM}
-                console.log(dataset)
+                //console.log(dataset)
                 topic = "actions"
                 update(dataset)
             });
@@ -1034,7 +1046,7 @@
 //HEATMAP 
 
           // Labels for the x and y axes
-          let myGroups = ["1. Yankee and the Brave (Ep. 4)", "2. Ooh La La", "3. Out of Sight", "4. Holy Calamafuck", "5. Goonies vs. E.T.", "6. Walking in the Snow", "7. Ju$t", "8. Never Look Back", "9. The Ground Below", "10. Pulling the Pin", "11. A Few Words for the Firing Squad (Radiation)"];
+          let myGroups = ["1. Yankee and the Brave (Ep. 4)", "2. Ooh La La", "3. Out of Sight", "4. Holy Calamafuck", "5. Goonies vs. E.T.", "6. Walking in the Snow", "7. Ju$t", "8. Never Look Back", "9. The Ground Below", "10. Pulling the Pin", "11. A Few Words for the Firing Squad"];
           let myVars = ["Killer Mike", "El-P", "family", "boasting", "disillusion", "threatening", "anguish", "existentialism", "anti-capitalism", "anti-police", "authority", "slavery", "racism", "elections", "revolution", "anti-religion", "poverty", "education", "wealth", "car", "money", "weapon", "social-media ", "work", "crime", "substances"];
 
             // X axis and scale
@@ -1048,7 +1060,7 @@
 
             let xAxis = canvas3.append("g")
               .call(xAxisGenerator)
-              .attr("transform", 'translate(0, 390)')
+              .attr("transform", 'translate(50, 390)')
               .style("color", "#7a13e0")
               .selectAll("text")
                 .attr("transform", "translate(-10,2)rotate(-45)")
@@ -1067,11 +1079,13 @@
 
             let yAxis = canvas3.append("g")
               .call(yAxisGenerator)
-              .attr("transform", 'translate(90, 0)')
+              .attr("transform", 'translate(140, 0)')
               .style("color", "#7a13e0")
               .selectAll("text")
-                .style("font-size", 15)
+                .attr("transform", "translate(-10,2)rotate(-45)")
+                .style("font-size", 10)
                 .style("fill", "#7a13e0");
+                
 
           // Colour scale for the squares
           let myColour = d3.scaleLinear()
@@ -1090,7 +1104,7 @@
                 return d.speaker == "el-p" }))
               .enter()
               .append("rect")
-                .attr("x", 100 + (i * 32))
+                .attr("x", 150 + (i * 32))
                 .attr("y", d => d.trackNumber * (32))
                 .attr("width", 30)
                 .attr("height", 30)
@@ -1214,7 +1228,7 @@
                     return d.speaker == "el-p" }))
                   .enter()
                   .append("rect")
-                    .attr("x", 100 + (i * 32))
+                    .attr("x", 150 + (i * 32))
                     .attr("y", d => d.trackNumber * (32))
                     .attr("width", 30)
                     .attr("height", 30)
@@ -1339,7 +1353,7 @@
                     return d.speaker == "killerMike" }))
                   .enter()
                   .append("rect")
-                    .attr("x", 100 + (i * 32))
+                    .attr("x", 150 + (i * 32))
                     .attr("y", d => d.trackNumber * (32))
                     .attr("width", 30)
                     .attr("height", 30)
@@ -1472,7 +1486,7 @@
                       value = i
                     };
                   };
-                  let table2 = [['Killer Mike', 100], ['El-P', 132], ['family', 164], ['boasting', 196], ['disillusion', 228], ['threatening', 260], ['anguish', 292], ['existentialism', 324], ['anti Capitalism', 356], ['anti police', 388], ['authority', 420], ['slavery', 452], ['racism', 484], ['elections', 516], ['revolution', 548], ['anti religion', 580], ['poverty', 612], ['education', 644], ['wealth', 676], ['car', 708], ['money', 714], ['weapons', 772], ['social media', 804], ['work', 836], ['crime', 868]];
+                  let table2 = [['Killer Mike', 150], ['El-P', 182], ['family', 214], ['boasting', 246], ['disillusion', 278], ['threatening', 310], ['anguish', 342], ['existentialism', 374], ['anti Capitalism', 406], ['anti police', 438], ['authority', 470], ['slavery', 502], ['racism', 534], ['elections', 566], ['revolution', 598], ['anti religion', 630], ['poverty', 662], ['education', 694], ['wealth', 726], ['car', 758], ['money', 790], ['weapons', 822], ['social media', 854], ['work', 886], ['crime', 918]];
                   let topic 
                   for (let i = 0; i < table2.length; i++){
                     if (d3.select(event.target).attr('x') == table2[i][1]){

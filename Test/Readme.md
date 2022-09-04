@@ -45,7 +45,7 @@ The first graph produced is a bar chart which shows how many times El-P and Kill
 We have included two buttons located at the top of the page to enable the viewer to toggle between both El-P and Killer Mike's data in order to compare results, as well as a tooltip to hover over each bar to get an exact reading for their value.  
 
 
-![image](markdownImages/buttons.png) ![image](markdownImages/barChart1ToolTip.png)
+![image](markdownImages/buttons.png) ![image](/markdownImages/barChart1Tooltip.png)
 
 
 ### II. A second bar graph to give a more in-depth overview of the thematic subcategories across the entire 'RTJ4' album.

@@ -4,7 +4,7 @@
 ## **Project description**
 <!-- description (obj, target audience, key features) -->
 
-'RTJ4' is the fourth studio album by the American hip-hop duo Run the Jewels. Released in June 2020 on the heels of the murder of George Floyd, it has garnered widespread critical acclaim for the members' unflinching stance on topics ranging from social injustice and police brutality to topical political events. Throughout their longstanding collaborative years, the duo – composed of Brooklyn-based producer and rapper El-P (Jaime Maline) and Atlanta hip-hop veteran Killer Mike (Michael Santiago Render) – have balanced a complementary yet differing artistic style when it comes to the content that they choose to tackle in their lyrics. This project aims to explore the dynamic between both rappers by breaking down the lyrical content of RTJ4 into general categories, each containing a range of pertinent subtopics. In doing so, we hope to offer fans and newcomers to the music Run the Jewels alike an engaging visual and interactive insight into the similarities and differences between El-P and Killer Mike by offering a chance to compare and contrast their lyrics.
+'RTJ4' is the fourth studio album by the American hip-hop duo Run the Jewels. Released in June 2020 on the heels of the murder of George Floyd, it has garnered widespread critical acclaim for the members' unflinching stance on topics ranging from social injustice and police brutality to topical political events. Throughout their longstanding collaborative years, the duo – composed of Brooklyn-based producer and rapper El-P (Jaime Maline) and Atlanta hip-hop veteran Killer Mike (Michael Santiago Render) – have balanced a complementary yet differing artistic style when it comes to the content that they choose to tackle in their lyrics. This project aims to explore the dynamic between both rappers by breaking down the lyrical content of 'RTJ4' into general categories, each containing a range of pertinent subtopics. In doing so, we hope to offer fans and newcomers to the music Run the Jewels alike an engaging visual and interactive insight into the similarities and differences between El-P and Killer Mike by offering a chance to compare and contrast their lyrics.
 
 
 ## **Data sources**
@@ -22,13 +22,13 @@ In order to produce these visual lyrical insights, we have manually combed throu
 
 5. State - Understood here as a state of being, in other words, wealth, poverty or education.
 
-6. Object - A reference to either weapons, money, social media or duo's beloved 1987 Buick Regal Grand National car.
+6. Object - A reference to either weapons, money, social media or the duo's beloved 1987 Buick Regal Grand National car.
 
 7. Action – A reference to an act either relating to crime or work.
 
 8. Substance use – A reference to drugs, alcohol or tobacco.
 
-Once this data was sorted and collected, it was compiled [in a csv file](RTJ4.csv) from which our visualisation could take shape. In order to make the reasoning behind this categorisation process as transparent and understandable as possible, we have also included a [bastardised csv repository](RTJ4_Repo.csv) which contains each track's line number number, content, category and subcategory.
+Once this data was sorted and collected, it was compiled [in a csv file](RTJ4.csv) from which our visualisation could take shape. In order to make the reasoning behind this categorisation process as transparent and understandable as possible, we have also included a [bastardised csv repository](RTJ4_Repo.csv) which contains each track's line number, content, category and subcategory.
 
 
 ## **Graph presentation**
@@ -57,7 +57,7 @@ The second graph offers a more comprehensive breakdown of each of the main eight
 
 ### III. A pie graph to offer viewers a side-by-side comparison of El-P and Killer Mike's lyrical themes across the entire 'RTJ4' album.
 
-The third grap is a pie chart which offers the user a side by side comparison of each of the eight main categories between El-P and Killer Mike. The user can toggle between each category and read the results given beneath the parameter selection. The graph and its results are colour-coded according to each speaker.
+The third graph is a pie chart which offers the user a side by side comparison of each of the eight main categories between El-P and Killer Mike. The user can toggle between each category and read the results given beneath the parameter selection. The graph and its results are colour-coded according to each speaker.
 
 ![image](markdownImages/pieChart.png)
 

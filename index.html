@@ -18,10 +18,33 @@
         h1, h2 {
           text-align: center;
           padding: 2px;
+          margin-bottom: 2%;
         }
         h1 {
           margin-top: 3%;
         }
+        .introText, #devCont, #barCharText, #pieText, #heatmapText{
+          padding: 2%;
+          text-align: justify;
+          border: 2.5px solid #c482ea;
+          margin-bottom: 3%;
+          margin-left: 3%;
+          margin-right: 3%;
+          font-size: 17px;
+        }
+        #devCont {
+          margin-top: 5%;
+        }
+        #heatmapText {
+          margin-bottom: 0%;
+        }
+        #devCont {
+          font-size: 10px;
+          text-align: center;
+          padding: none;
+          border: none;
+        }
+
 
         div.tooltip {
             position: absolute;
@@ -50,7 +73,13 @@
           border: solid 2px black;
 
         }
+        .heatmapBtn, .barCharBtn {
+        margin-left: 3%;
+        }
         /*  */
+        .pieChart {
+          margin-bottom: 10%;
+        }
         #my_pie {
           margin-top: 10%;
         }
@@ -113,7 +142,7 @@
         }
         
         #my_heatmap {
-          margin-top: 10%;
+          margin-top: 5%;
         }
 
     </style>
@@ -121,14 +150,34 @@
 <body>
     <h1>A visualisation of "RTJ4" by Run the Jewels </h1>
     <h2>A thematical analysis</h2>
+
+    <div class = "introText">'RTJ4' is the fourth studio album by the American hip-hop duo Run the Jewels. Throughout their longstanding collaborative years, the duo – composed of Brooklyn-based producer and rapper El-P (Jaime Maline) and Atlanta hip-hop veteran Killer Mike (Michael Santiago Render) – have balanced a complementary yet differing artistic style when it comes to the content that they choose to tackle in their lyrics. This project aims to explore the dynamic between both rappers by breaking down the lyrical content of 'RTJ4' into general categories, each containing a range of pertinent subtopics. In doing so, we hope to offer fans and newcomers to the music Run the Jewels alike an engaging visual and interactive insight into the similarities and differences between El-P and Killer Mike by offering a chance to compare and contrast their lyrics. <br> In order to produce these visual lyrical insights, we have manually combed through all eleven track featured on 'RTJ4' and analysed each of their lines, breaking them down by speaker. Each line's content was considered, categorised into specific subgroups, then placed in one of eight main categories:
+      <ol>
+        <li><b>Person</b> – An individual or group of people, whether a member of Run the Jewels, a family member, writer, philospher etc.</li>
+        <li><b>Feeling </b>- A reference to a particular feeling, such as anguish, disillusion or boasting (understood here not only in the strict definition of the word, but also in terms of triumph and/or glee).</li>
+        <li><b>Politics </b>– A reference to a politically-charged topic such as anti-police sentiments, anti-capitalism, racism or systemic and/or governmental authority.</li>
+        <li><b>Place </b>- A reference to a specific geographic location</li>
+        <li><b>State </b>- Understood here as a state of being, in other words, wealth, poverty or education.</li>
+        <li><b>Object </b>- A reference to either weapons, money, social media or the duo's beloved 1987 Buick Regal Grand National car.</li>
+        <li><b>Action </b>– A reference to an act either relating to crime or work.</li>
+        <li><b>Substance use </b>– A reference to drugs, alcohol or tobacco.</li>
+      </ol>
+      We have created four graphs for the purposes of this project to allow viewers to contrast and compare the lyrical themes between El-P and Killer Mike, based on the number of instances a category or a subcategory is mentioned. 
+    </div>
+
+    <h2>Bar charts - An overview of the entire album</h2>
     <div class = "barChar"></div>
-      <button id= "Elbutton">El-P</button>
-      <button id= "KMbutton">Killer Mike</button>
+    <div id="barCharText">The first graph chart shows how many times El-P and Killer Mike have mentioned each one of the eight main categories specified above throughout the entirety of 'RTJ4'. The second graph offers a more comprehensive breakdown of each of the main eight categories into their component subcategories. Eachs subcategory has been color-coded to correspond to their respective main category. The two buttons enable you to toggle between El-P and Killer Mike's data in order to compare results; a tooltip gives an exact reading of each bar.</div>
+      <div class="barCharBtn">
+        <button id= "Elbutton">El-P</button>
+        <button id= "KMbutton">Killer Mike</button>
+      </div>
       <div id="my_bar"></div>
       <div id="my_bar2"></div>
     </div>
 
-    <!-- Create a div where the graph will take place -->
+    <h2>Pie chart - Side by side comparison</h2>
+    <div id="pieText">This pie chart offers a side by side comparison of each of the eight main categories between El-P and Killer Mike. You can toggle between each category by clicking on the category and read the results given beneath the parameter selection. The graph and its results are colour-coded according to each speaker.</div>
     <div id = "my_pie" class="pieChart">
       <div class="pieInteractions">
         <div class="pieOptions">
@@ -149,10 +198,18 @@
         </div>
       </div>
 
-    <div id = "my_heatmap">
-      <button id="btnElp">El-P</button>
-      <button id="btnKM">Killer Mike</button>
+    <h2>Heatmap - Subcategory breakdown by song</h2>
+    <div id="heatmapText">The fourth and final graph is a heatmap showing the number of instances each speaker has mentioned certain sub-categories by song. The subcategories have been selected at our discretion in order to convey the most important lyrical themes in each song. As is the case for the bar charts, you can toggle between speakers using the buttons provided, and may hover over each cell to get an exact reading of their value.</div>
+    <div class="heatmap">
+      <div id = "my_heatmap">
+        <div class="heatmapBtn">
+          <button id="btnElp">El-P</button>
+          <button id="btnKM">Killer Mike</button>
+        </div>
+      </div>  
     </div>
+
+    <div id="devCont">This project was developed as part of the course "Visualisation de donées" (Spring 2022) taught by Isaac Pante (SLI, Lettres, UNIL).</div>
 
 
 <!-- Load d3.js -->

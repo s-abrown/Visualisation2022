@@ -1,6 +1,6 @@
 ![](markdownImages/rtj4-2.jpg)
 
-# **'RTJ4' by Run the Jewels – A visualtion**
+# **'RTJ4' by Run the Jewels – A visualisation**
 
 
 ## **Project description**
